@@ -1,0 +1,38 @@
+# Backup bestanden
+*.backup
+*_CHECKPOINT.html
+*_CHECKPOINT.*
+*.bak
+*.old
+
+# Tijdelijke bestanden
+*.tmp
+*.temp
+~$*
+
+# Editor bestanden
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Log bestanden
+*.log
+
+# Python cache (als je ooit Python scripts toevoegt)
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+
+# Node modules (als je ooit Node.js gebruikt)
+node_modules/
+package-lock.json
+
+# IDE bestanden
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+

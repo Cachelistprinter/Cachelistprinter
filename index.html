@@ -1,0 +1,967 @@
+<!--
+    ========================================================================
+    REMINDER: LINKS AANPASSEN
+    ========================================================================
+    
+    Om de download- of donatielink aan te passen:
+    
+    1. Ga naar regel 689 (zoek naar "CONFIGURATIE - Pas deze links aan")
+    2. Pas daar de siteConfig aan:
+       - downloadUrl: voor de download link
+       - donationUrl: voor de donatie link (QR code wordt automatisch bijgewerkt)
+    
+    De configuratie staat in het <script> gedeelte, helemaal bovenaan.
+    
+    ========================================================================
+-->
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">Cachelistprinter - Info & Download</title>
+    <link rel="icon" type="image/png" href="Cachelistprinter icoon.png">
+    <link rel="apple-touch-icon" href="Cachelistprinter icoon.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font: 14px Tahoma, sans-serif;
+            color: #424242;
+            background: radial-gradient(circle, rgb(252, 252, 247), rgb(184, 184, 175));
+            background-attachment: fixed;
+            min-height: 100vh;
+            padding: 58px 0 70px 0;
+        }
+
+        .container {
+            max-width: 1350px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header-bar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 50px;
+            background: rgb(154, 205, 50);
+            text-align: center;
+            border-bottom: 1px rgba(0, 0, 0, 0.4) solid;
+            z-index: 7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header-bar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 1350px;
+        }
+
+        .header-bar h1 {
+            font-family: Tahoma, sans-serif;
+            font-size: 24px;
+            font-weight: bold;
+            color: #6B8E23;
+            text-shadow: 
+                1px 1px 0 rgba(0,0,0,0.3),
+                2px 2px 0 rgba(0,0,0,0.3),
+                3px 3px 0 rgba(0,0,0,0.3),
+                4px 4px 0 rgba(0,0,0,0.3),
+                5px 5px 0 rgba(0,0,0,0.3),
+                6px 6px 12px rgba(0,0,0,0.6);
+            line-height: 50px;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        .header-bar nav {
+            display: flex;
+            gap: 20px;
+        }
+
+        .header-bar nav a {
+            background-image: linear-gradient(to bottom, rgb(243, 243, 243), rgb(200, 200, 200));
+            background-color: whiteSmoke;
+            color: rgb(80, 80, 80);
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 12px;
+            padding: 0 12px;
+            height: 30px;
+            line-height: 30px;
+            border-radius: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-block;
+            white-space: nowrap;
+        }
+
+        .header-bar nav a:hover {
+            background-image: linear-gradient(to bottom, rgb(160, 240, 0), rgb(32, 208, 0));
+            color: rgba(0, 0, 0, 0.9);
+            text-decoration: none;
+        }
+
+        .header-bar nav a:active {
+            background-image: linear-gradient(to bottom, rgb(32, 208, 0), rgb(160, 240, 0));
+            color: rgba(0, 0, 0, 0.9);
+        }
+
+        /* Language Selector */
+        .language-selector {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .language-flag {
+            width: 32px;
+            height: 24px;
+            cursor: pointer;
+            border-radius: 3px;
+            transition: all 0.2s;
+            opacity: 0.7;
+            display: inline-block;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            background-size: cover;
+            background-position: center;
+        }
+
+        .language-flag:hover {
+            opacity: 1;
+            transform: scale(1.15);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .language-flag.active {
+            opacity: 1;
+            border: 2px solid rgba(0, 0, 0, 0.4);
+            box-shadow: 0 0 6px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Nederlandse vlag */
+        .language-flag[data-lang="nl"] {
+            background-image: url('Nederland.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /* Duitse vlag */
+        .language-flag[data-lang="de"] {
+            background-image: url('Duitsland.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /* Britse vlag (Union Jack) */
+        .language-flag[data-lang="en"] {
+            background-image: url('Verenigd Koninkrijk.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /* Franse vlag */
+        .language-flag[data-lang="fr"] {
+            background-image: url('Frankrijk.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 10px;
+        }
+
+        .content-box {
+            width: 100%;
+            text-align: left;
+            overflow: visible;
+            position: relative;
+            padding: 15px;
+            background: white;
+            border: 1px rgb(200, 200, 200) solid;
+            box-shadow: 0px 0px 4px rgb(251, 251, 251);
+            border-radius: 4px;
+            max-width: 1350px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section#info {
+            margin-bottom: 55px;
+        }
+
+        .section#download {
+            text-align: center;
+        }
+
+        .section#download h3 {
+            margin-top: 5px;
+            text-align: left;
+            margin-bottom: 8px;
+        }
+
+        .donation-section h3 {
+            text-align: left;
+        }
+
+        .section:last-child {
+            margin-bottom: 0;
+        }
+
+        .section h3 {
+            font-family: Tahoma, sans-serif;
+            font-size: 20px;
+            font-weight: bold;
+            color: #6B8E23;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
+            margin-bottom: 15px;
+            border-bottom: 1px lightgray dotted;
+            padding-bottom: 5px;
+        }
+
+        /* Logo/Icon Section */
+        .logo-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .app-logo-title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .app-logo-title img {
+            width: 75px;
+            height: 75px;
+            object-fit: contain;
+            display: block;
+        }
+
+        .app-logo-title-text {
+            font-family: Tahoma, sans-serif;
+            font-size: 75px;
+            font-weight: bold;
+            color: #6B8E23;
+            text-shadow: 
+                1px 1px 0 rgba(0,0,0,0.3),
+                2px 2px 0 rgba(0,0,0,0.3),
+                3px 3px 0 rgba(0,0,0,0.3),
+                4px 4px 0 rgba(0,0,0,0.3),
+                5px 5px 0 rgba(0,0,0,0.3),
+                6px 6px 12px rgba(0,0,0,0.6);
+            -webkit-user-select: none;
+            user-select: none;
+            line-height: 1.2;
+        }
+
+        .intro-text {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #424242;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Features Section Container */
+        .features-container {
+            display: flex;
+            gap: 30px;
+            align-items: flex-start;
+        }
+
+        .features-list-wrapper {
+            flex: 1;
+        }
+
+        .features-image {
+            flex: 1;
+            max-width: 500px;
+        }
+
+        .features-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+            box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+        }
+
+        /* Features List */
+        .features-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .features-list li {
+            padding: 8px 0;
+            padding-left: 30px;
+            position: relative;
+            font-size: 15px;
+            line-height: 1.5;
+        }
+
+        .features-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: rgb(154, 205, 50);
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        /* Download Section */
+        .download-button {
+            display: inline-block;
+            background-image: linear-gradient(to bottom, rgb(243, 243, 243), rgb(200, 200, 200));
+            background-color: whiteSmoke;
+            color: rgb(80, 80, 80);
+            padding: 15px 30px;
+            border-radius: 13px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            transition: all 0.2s;
+            margin-bottom: 10px;
+        }
+
+        .download-button:hover {
+            background-image: linear-gradient(to bottom, rgb(160, 240, 0), rgb(32, 208, 0));
+            color: rgba(0, 0, 0, 0.9);
+            transform: translateY(-2px);
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .download-button:active {
+            background-image: linear-gradient(to bottom, rgb(32, 208, 0), rgb(160, 240, 0));
+            transform: translateY(0);
+        }
+
+        .donation-link-button {
+            display: inline-block;
+            background-image: linear-gradient(to bottom, rgb(243, 243, 243), rgb(200, 200, 200));
+            background-color: whiteSmoke;
+            color: rgb(80, 80, 80);
+            padding: 10px 20px;
+            border-radius: 13px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            transition: all 0.2s;
+            margin-top: 10px;
+        }
+
+        .donation-link-button:hover {
+            background-image: linear-gradient(to bottom, rgb(160, 240, 0), rgb(32, 208, 0));
+            color: rgba(0, 0, 0, 0.9);
+            transform: translateY(-2px);
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .donation-link-button:active {
+            background-image: linear-gradient(to bottom, rgb(32, 208, 0), rgb(160, 240, 0));
+            transform: translateY(0);
+        }
+
+        .info-link-button {
+            display: inline-block;
+            background-image: linear-gradient(to bottom, rgb(243, 243, 243), rgb(200, 200, 200));
+            background-color: whiteSmoke;
+            color: rgb(80, 80, 80);
+            padding: 8px 16px;
+            border-radius: 13px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 12px;
+            cursor: pointer;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            transition: all 0.2s;
+            margin-top: 40px;
+        }
+
+        .info-link-button:hover {
+            background-image: linear-gradient(to bottom, rgb(160, 240, 0), rgb(32, 208, 0));
+            color: rgba(0, 0, 0, 0.9);
+            transform: translateY(-2px);
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .info-link-button:active {
+            background-image: linear-gradient(to bottom, rgb(32, 208, 0), rgb(160, 240, 0));
+            transform: translateY(0);
+        }
+
+        .button-text {
+            display: block;
+        }
+
+        .button-subtext {
+            display: block;
+            font-size: 12px;
+            font-weight: normal;
+            margin-top: 5px;
+            opacity: 0.8;
+        }
+
+        .download-info {
+            font-size: 12px;
+            color: #666;
+            margin-top: 8px;
+        }
+
+        /* Donation Section */
+        .donation-section {
+            text-align: center;
+        }
+
+        .donation-section h3 {
+            text-align: left;
+            margin-top: 5px;
+            margin-bottom: 8px;
+        }
+
+
+        .donation-content-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin: 10px 0;
+            flex-wrap: wrap;
+        }
+
+        .donation-button-image {
+            display: inline-block;
+        }
+
+        .donation-button-image img {
+            max-width: 350px;
+            height: auto;
+            display: block;
+            border-radius: 10px;
+        }
+
+        .qr-code-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .qr-code-container p {
+            font-size: 13px;
+            margin: 0;
+            color: #666;
+        }
+
+        .qr-code-wrapper {
+            display: inline-block;
+            padding: 8px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin: 0;
+        }
+
+        .qr-code {
+            display: block;
+            max-width: 130px;
+            height: auto;
+        }
+
+
+        /* Footer */
+        .footer-bar {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            height: 40px;
+            background: rgb(154, 205, 50);
+            text-align: center;
+            border-top: 1px rgba(0, 0, 0, 0.4) solid;
+            z-index: 5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .footer-bar .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .footer-bar p {
+            font-size: 11px;
+            color: rgba(0, 0, 0, 0.8);
+            margin: 0;
+        }
+
+        .footer-bar a {
+            color: rgba(0, 0, 0, 0.8);
+            text-decoration: underline;
+        }
+
+        .footer-bar a:hover {
+            color: #000;
+        }
+
+        .copyright {
+            font-size: 10px;
+            opacity: 0.7;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 15px;
+            }
+
+            .content-box {
+                padding: 15px;
+            }
+
+            .header-bar .container {
+                flex-wrap: wrap;
+                gap: 5px;
+            }
+
+            .header-bar nav {
+                gap: 10px;
+            }
+
+            .header-bar nav a {
+                font-size: 12px;
+                padding: 3px 8px;
+            }
+
+            .language-selector {
+                gap: 4px;
+            }
+
+            .language-flag {
+                width: 28px;
+                height: 21px;
+            }
+
+            .download-button {
+                padding: 12px 20px;
+                font-size: 14px;
+            }
+
+            .features-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .features-image {
+                max-width: 100%;
+            }
+
+            .donation-content-wrapper {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .qr-code {
+                max-width: 120px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header-bar">
+        <div class="container">
+            <h1>Cachelistprinter</h1>
+            <nav>
+                <a href="#home" data-i18n="nav.home">Home</a>
+                <a href="#download" data-i18n="nav.download">Download</a>
+            </nav>
+            <div class="language-selector">
+                <span class="language-flag active" data-lang="nl" title="Nederlands"></span>
+                <span class="language-flag" data-lang="de" title="Deutsch"></span>
+                <span class="language-flag" data-lang="en" title="English"></span>
+                <span class="language-flag" data-lang="fr" title="Français"></span>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="content-box">
+                <section id="home" class="section">
+                    <div class="logo-section">
+                        <div class="app-logo-title">
+                            <img src="Cachelistprinter icoon.png" alt="Cachelistprinter Logo">
+                            <div class="app-logo-title-text" data-i18n="home.title">Cachelistprinter</div>
+                        </div>
+                    </div>
+                    <p class="intro-text" data-i18n="home.description">
+                        Cachelistprinter is een standalone Electron-applicatie voor het beheren en afdrukken van geocache-lijsten. Het programma is gebaseerd op en vervangt het originele Geoprinter programma. Met Cachelistprinter kun je GPX-bestanden importeren, cachelijsten maken met start en bonus info, hints vertalen, en zowel lijsten als kaarten afdrukken. Het programma werkt volledig onafhankelijk en draait op elke PC zonder extra software-installaties.
+                    </p>
+                </section>
+
+                <section id="info" class="section">
+                    <h3 data-i18n="info.title">Functies</h3>
+                    <div class="features-container">
+                        <div class="features-list-wrapper">
+                            <ul class="features-list">
+                                <li data-i18n="info.feature1">Import GPX-bestand uit Geocaching.com</li>
+                                <li data-i18n="info.feature2">Volgorde lijst aanpasbaar</li>
+                                <li data-i18n="info.feature3">Lijst volledig verwijderen</li>
+                                <li data-i18n="info.feature4">Start info toevoegen</li>
+                                <li data-i18n="info.feature5">Bonus info toevoegen</li>
+                                <li data-i18n="info.feature6">Hints laten vertalen</li>
+                                <li data-i18n="info.feature7">Lijst printen</li>
+                                <li data-i18n="info.feature8">Kaarten maken (Standaard Google, OpenStreetMap of Topografische kaartweergave)</li>
+                            </ul>
+                        </div>
+                        <div class="features-image">
+                            <img src="Voorbeeld Cachelistprinter.jpg" alt="Voorbeeld Cachelistprinter">
+                        </div>
+                    </div>
+                </section>
+
+                <section id="download" class="section">
+                    <h3 data-i18n="download.title">Download</h3>
+                    <a href="#" class="download-button" id="download-button">
+                        <span class="button-text" data-i18n="download.button">Download Cachelistprinter</span>
+                        <span class="button-subtext" data-i18n="download.version">Versie 1.0</span>
+                    </a>
+                    <p class="download-info" data-i18n="download.compatible">
+                        Compatibel met Google Chrome en andere Chromium-gebaseerde browsers.
+                    </p>
+                </section>
+
+                <section class="section donation-section">
+                    <h3 data-i18n="donation.title">Ondersteun dit project</h3>
+                    <p data-i18n="donation.description" style="margin-bottom: 8px;">Als je Cachelistprinter nuttig vindt, overweeg dan een donatie om de ontwikkeling te ondersteunen.</p>
+                    <div class="donation-content-wrapper">
+                        <div class="donation-button-image">
+                            <img src="Bedankt voor de koffie.png" alt="Bedankt voor de koffie">
+                        </div>
+                        
+                        <!-- QR Code voor betaalverzoek -->
+                        <div class="qr-code-container">
+                            <p data-i18n="donation.qr-text">Scan de QR code om te doneren:</p>
+                            <div class="qr-code-wrapper">
+                                <img id="qr-code-image"
+                                     alt="QR Code voor donatie" 
+                                     class="qr-code">
+                            </div>
+                            <a id="donation-link"
+                               target="_blank" 
+                               class="donation-link-button"
+                               data-i18n="donation.qr-link">Of klik hier om direct te doneren</a>
+                        </div>
+                    </div>
+                    <a href="mailto:cmus@home.nl" class="info-link-button" data-i18n="donation.note">Voor contact mail naar cmus@home.nl</a>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer-bar">
+        <div class="container">
+            <p data-i18n="footer.created">Gemaakt door: <strong>Cmus</strong> | Gebaseerd op Geoprinter van <strong>Walvë FamIso</strong></p>
+            <p class="copyright" data-i18n="footer.copyright">© 2025 Cachelistprinter. Alle rechten voorbehouden.</p>
+        </div>
+    </footer>
+
+    <script>
+        // ============================================
+        // CONFIGURATIE - Pas deze links aan
+        // ============================================
+        // Hieronder staan beide links die op de website worden gebruikt.
+        // Pas deze aan wanneer je een nieuwe download- of donatielink hebt.
+        // De QR code wordt automatisch bijgewerkt wanneer je de donatielink aanpast.
+        // ============================================
+        const siteConfig = {
+            downloadUrl: '#',  // Vervang '#' door de echte download link (bijv. 'https://github.com/.../releases/download/.../Cachelistprinter.zip')
+            donationUrl: '#'  // Pas deze aan voor een nieuwe donatielink
+        };
+        // ============================================
+        
+        // Translations object
+        const translations = {
+            nl: {
+                'page.title': 'Cachelistprinter - Info & Download',
+                'nav.home': 'Home',
+                'nav.download': 'Download',
+                'home.title': 'Cachelistprinter',
+                'home.description': 'Cachelistprinter is een standalone Electron-applicatie voor het beheren en afdrukken van geocache-lijsten. Het programma is gebaseerd op en vervangt het originele Geoprinter programma. Met Cachelistprinter kun je GPX-bestanden importeren, cachelijsten maken met start en bonus info, hints vertalen, en zowel lijsten als kaarten afdrukken. Het programma werkt volledig onafhankelijk en draait op elke PC zonder extra software-installaties.',
+                'info.title': 'Functies',
+                'info.feature1': 'Import GPX-bestand uit Geocaching.com',
+                'info.feature2': 'Volgorde lijst aanpasbaar',
+                'info.feature3': 'Lijst volledig verwijderen',
+                'info.feature4': 'Start info toevoegen',
+                'info.feature5': 'Bonus info toevoegen',
+                'info.feature6': 'Hints laten vertalen',
+                'info.feature7': 'Lijst printen',
+                'info.feature8': 'Kaarten maken (Standaard Google, OpenStreetMap of Topografische kaartweergave)',
+                'download.title': 'Download',
+                'download.button': 'Download Cachelistprinter',
+                'download.version': 'Versie 1.0',
+                'download.compatible': 'Compatibel met Google Chrome en andere Chromium-gebaseerde browsers.',
+                'download.alert': 'Download link wordt hier toegevoegd',
+                'donation.title': 'Ondersteun dit project',
+                'donation.description': 'Als je Cachelistprinter nuttig vindt, overweeg dan een donatie om de ontwikkeling te ondersteunen.',
+                'donation.qr-text': 'Scan de QR code om te doneren:',
+                'donation.qr-link': 'Of klik hier om direct te doneren',
+                'donation.note': 'Voor contact mail naar cmus@home.nl',
+                'donation.confirm': 'Je wordt doorgestuurd naar de donatiepagina. Doorgaan?',
+                'footer.created': 'Gemaakt door: <strong>Cmus</strong> | Gebaseerd op Geoprinter van <strong>Walvë FamIso</strong>',
+                'footer.copyright': '© 2025 Cachelistprinter. Alle rechten voorbehouden.'
+            },
+            de: {
+                'page.title': 'Cachelistprinter - Info & Download',
+                'nav.home': 'Startseite',
+                'nav.download': 'Download',
+                'home.title': 'Cachelistprinter',
+                'home.description': 'Cachelistprinter ist eine eigenständige Electron-Anwendung zum Verwalten und Drucken von Geocache-Listen. Das Programm basiert auf und ersetzt das ursprüngliche Geoprinter-Programm. Mit Cachelistprinter können Sie GPX-Dateien importieren, Cache-Listen mit Start- und Bonus-Info erstellen, Hinweise übersetzen und sowohl Listen als auch Karten drucken. Das Programm funktioniert vollständig unabhängig und läuft auf jedem PC ohne zusätzliche Software-Installationen.',
+                'info.title': 'Funktionen',
+                'info.feature1': 'GPX-Datei von Geocaching.com importieren',
+                'info.feature2': 'Listenreihenfolge anpassbar',
+                'info.feature3': 'Liste vollständig löschen',
+                'info.feature4': 'Start-Info hinzufügen',
+                'info.feature5': 'Bonus-Info hinzufügen',
+                'info.feature6': 'Hinweise übersetzen lassen',
+                'info.feature7': 'Liste drucken',
+                'info.feature8': 'Karten erstellen (Standard Google, OpenStreetMap oder topografische Kartenansicht)',
+                'download.title': 'Download',
+                'download.button': 'Cachelistprinter herunterladen',
+                'download.version': 'Version 1.0',
+                'download.compatible': 'Kompatibel mit Google Chrome und anderen Chromium-basierten Browsern.',
+                'download.alert': 'Download-Link wird hier hinzugefügt',
+                'donation.title': 'Unterstützen Sie dieses Projekt',
+                'donation.description': 'Wenn Sie Cachelistprinter nützlich finden, erwägen Sie bitte eine Spende, um die Entwicklung zu unterstützen.',
+                'donation.qr-text': 'Scannen Sie den QR-Code, um zu spenden:',
+                'donation.qr-link': 'Oder klicken Sie hier, um direkt zu spenden',
+                'donation.note': 'Für Informationen können Sie eine E-Mail an cmus@home.nl senden',
+                'donation.confirm': 'Sie werden zur Spenden-Seite weitergeleitet. Fortfahren?',
+                'footer.created': 'Erstellt von: <strong>Cmus</strong> | Basierend auf Geoprinter von <strong>Walvë FamIso</strong>',
+                'footer.copyright': '© 2025 Cachelistprinter. Alle Rechte vorbehalten.'
+            },
+            en: {
+                'page.title': 'Cachelistprinter - Info & Download',
+                'nav.home': 'Home',
+                'nav.download': 'Download',
+                'home.title': 'Cachelistprinter',
+                'home.description': 'Cachelistprinter is a standalone Electron application for managing and printing geocache lists. The program is based on and replaces the original Geoprinter program. With Cachelistprinter you can import GPX files, create cache lists with start and bonus info, translate hints, and print both lists and maps. The program works completely independently and can run on any PC without additional software installations.',
+                'info.title': 'Features',
+                'info.feature1': 'Import GPX file from Geocaching.com',
+                'info.feature2': 'List order adjustable',
+                'info.feature3': 'Completely delete list',
+                'info.feature4': 'Add start info',
+                'info.feature5': 'Add bonus info',
+                'info.feature6': 'Translate hints',
+                'info.feature7': 'Print list',
+                'info.feature8': 'Create maps (Standard Google, OpenStreetMap or Topographic map view)',
+                'download.title': 'Download',
+                'download.button': 'Download Cachelistprinter',
+                'download.version': 'Version 1.0',
+                'download.compatible': 'Compatible with Google Chrome and other Chromium-based browsers.',
+                'download.alert': 'Download link will be added here',
+                'donation.title': 'Support this project',
+                'donation.description': 'If you find Cachelistprinter useful, please consider a donation to support development.',
+                'donation.qr-text': 'Scan the QR code to donate:',
+                'donation.qr-link': 'Or click here to donate directly',
+                'donation.note': 'For information, you can email cmus@home.nl',
+                'donation.confirm': 'You will be redirected to the donation page. Continue?',
+                'footer.created': 'Created by: <strong>Cmus</strong> | Based on Geoprinter by <strong>Walvë FamIso</strong>',
+                'footer.copyright': '© 2025 Cachelistprinter. All rights reserved.'
+            },
+            fr: {
+                'page.title': 'Cachelistprinter - Info & Téléchargement',
+                'nav.home': 'Accueil',
+                'nav.download': 'Télécharger',
+                'home.title': 'Cachelistprinter',
+                'home.description': 'Cachelistprinter est une application Electron autonome pour gérer et imprimer des listes de géocaches. Le programme est basé sur et remplace le programme Geoprinter original. Avec Cachelistprinter, vous pouvez importer des fichiers GPX, créer des listes de caches avec des informations de départ et bonus, traduire les indices et imprimer à la fois des listes et des cartes. Le programme fonctionne de manière complètement indépendante et peut s\'exécuter sur n\'importe quel PC sans installations logicielles supplémentaires.',
+                'info.title': 'Fonctionnalités',
+                'info.feature1': 'Importer un fichier GPX depuis Geocaching.com',
+                'info.feature2': 'Ordre de la liste ajustable',
+                'info.feature3': 'Supprimer complètement la liste',
+                'info.feature4': 'Ajouter des informations de départ',
+                'info.feature5': 'Ajouter des informations bonus',
+                'info.feature6': 'Faire traduire les indices',
+                'info.feature7': 'Imprimer la liste',
+                'info.feature8': 'Créer des cartes (Google standard, OpenStreetMap ou vue cartographique topographique)',
+                'download.title': 'Télécharger',
+                'download.button': 'Télécharger Cachelistprinter',
+                'download.version': 'Version 1.0',
+                'download.compatible': 'Compatible avec Google Chrome et autres navigateurs basés sur Chromium.',
+                'download.alert': 'Le lien de téléchargement sera ajouté ici',
+                'donation.title': 'Soutenez ce projet',
+                'donation.description': 'Si vous trouvez Cachelistprinter utile, veuillez envisager un don pour soutenir le développement.',
+                'donation.qr-text': 'Scannez le code QR pour faire un don:',
+                'donation.qr-link': 'Ou cliquez ici pour faire un don directement',
+                'donation.note': 'Pour plus d\'informations, vous pouvez envoyer un e-mail à cmus@home.nl',
+                'donation.confirm': 'Vous serez redirigé vers la page de don. Continuer?',
+                'footer.created': 'Créé par: <strong>Cmus</strong> | Basé sur Geoprinter par <strong>Walvë FamIso</strong>',
+                'footer.copyright': '© 2025 Cachelistprinter. Tous droits réservés.'
+            }
+        };
+
+        // Get current language from localStorage or default to Dutch
+        let currentLang = localStorage.getItem('language') || 'nl';
+
+        // Function to get translation
+        function getTranslation(key) {
+            return translations[currentLang][key] || translations['nl'][key] || key;
+        }
+
+        // Function to change language
+        function changeLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('language', lang);
+            
+            // Update HTML lang attribute
+            document.documentElement.lang = lang;
+            
+            // Update page title
+            const titleElement = document.getElementById('page-title');
+            if (titleElement) {
+                titleElement.textContent = getTranslation('page.title');
+            }
+            
+            // Update all elements with data-i18n attribute
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                const translation = getTranslation(key);
+                
+                // Check if translation contains HTML
+                if (translation.includes('<')) {
+                    element.innerHTML = translation;
+                } else {
+                    element.textContent = translation;
+                }
+            });
+            
+            // Update active language flag
+            document.querySelectorAll('.language-flag').forEach(flag => {
+                flag.classList.remove('active');
+                if (flag.getAttribute('data-lang') === lang) {
+                    flag.classList.add('active');
+                }
+            });
+        }
+
+        // Initialize language on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set download URL
+            const downloadButton = document.getElementById('download-button');
+            if (downloadButton) {
+                if (siteConfig.downloadUrl && siteConfig.downloadUrl !== '#') {
+                    downloadButton.href = siteConfig.downloadUrl;
+                    downloadButton.onclick = null; // Verwijder de oude alert
+                } else {
+                    downloadButton.onclick = function(e) {
+                        e.preventDefault();
+                        alert(getTranslation('download.alert'));
+                    };
+                }
+            }
+            
+            // Set donation URL for QR code and link
+            const qrCodeImage = document.getElementById('qr-code-image');
+            const donationLink = document.getElementById('donation-link');
+            
+            if (qrCodeImage) {
+                qrCodeImage.src = 'https://api.qrserver.com/v1/create-qr-code/?size=130x130&data=' + encodeURIComponent(siteConfig.donationUrl);
+            }
+            
+            if (donationLink) {
+                donationLink.href = siteConfig.donationUrl;
+            }
+            
+            changeLanguage(currentLang);
+            
+            // Add click handlers to language flags
+            document.querySelectorAll('.language-flag').forEach(flag => {
+                flag.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    changeLanguage(lang);
+                });
+            });
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const href = this.getAttribute('href');
+                
+                // For home, scroll instantly to top
+                if (href === '#home' || href === '#') {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'auto'
+                    });
+                } else {
+                    // For download, scroll instantly to download section
+                    if (href === '#download') {
+                        const target = document.querySelector(href);
+                        if (target) {
+                            const headerHeight = 50;
+                            
+                            // Get the download section position
+                            const targetRect = target.getBoundingClientRect();
+                            const targetTop = targetRect.top + window.pageYOffset;
+                            
+                            // Scroll MUCH further down to ensure info section is completely hidden
+                            // Using a large positive offset (100px) to scroll well past the section start
+                            const scrollPosition = targetTop - headerHeight + 100;
+                            
+                            console.log('Scrolling to:', scrollPosition, 'Target top:', targetTop);
+                            
+                            // Instant scroll (no smooth animation)
+                            window.scrollTo({
+                                top: scrollPosition,
+                                behavior: 'auto'
+                            });
+                        }
+                    } else {
+                        const target = document.querySelector(href);
+                        if (target) {
+                            const headerHeight = 50;
+                            let targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+                            
+                            window.scrollTo({
+                                top: targetPosition,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }
+                }
+            });
+        });
+
+    </script>
+</body>
+</html>
