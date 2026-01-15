@@ -358,6 +358,19 @@
             transform: translateY(0);
         }
 
+        .download-button.disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            pointer-events: none;
+            background-image: linear-gradient(to bottom, rgb(220, 220, 220), rgb(180, 180, 180));
+        }
+
+        .download-button.disabled:hover {
+            transform: none;
+            box-shadow: none;
+            background-image: linear-gradient(to bottom, rgb(220, 220, 220), rgb(180, 180, 180));
+        }
+
         .donation-link-button {
             display: inline-block;
             background-image: linear-gradient(to bottom, rgb(243, 243, 243), rgb(200, 200, 200));
@@ -650,9 +663,9 @@
 
                 <section id="download" class="section">
                     <h3 data-i18n="download.title">Download</h3>
-                    <a href="#" class="download-button" id="download-button">
-                        <span class="button-text" data-i18n="download.button">Download Cachelistprinter</span>
-                        <span class="button-subtext" data-i18n="download.version">Versie 1.3</span>
+                    <a href="#" class="download-button disabled" id="download-button">
+                        <span class="button-text" data-i18n="download.button">Binnenkort: Cachelistprinter V1.4 te downloaden</span>
+                        <span class="button-subtext" data-i18n="download.version" style="display: none;"></span>
                     </a>
                     <p class="download-info" data-i18n="download.compatible">
                         Compatibel met Google Chrome en andere Chromium-gebaseerde browsers.
@@ -705,7 +718,7 @@
         // De QR code wordt automatisch bijgewerkt wanneer je de donatielink aanpast.
         // ============================================
         const siteConfig = {
-            downloadUrl: 'https://1drv.ms/u/c/d14f47efc6088a2b/IQAXwJTB7AEtSZJmSOZQVtXaAbP6174d8d4jlK9SXbWsz40?e=mS1wCK',  // Vervang '#' door de echte download link (bijv. 'https://github.com/.../releases/download/.../Cachelistprinter.zip')
+            downloadUrl: 'https://1drv.ms/u/c/d14f47efc6088a2b/IQD2oQIRWpEwRZMCOfpcL-ogAekmI4qu5Lb5n6QjcfX4j2Q?e=2YAgMc',  // Vervang '#' door de echte download link (bijv. 'https://github.com/.../releases/download/.../Cachelistprinter.zip')
             donationUrl: 'https://ko-fi.com/cachelistprinter'  // Pas deze aan voor een nieuwe donatielink
         };
         // ============================================
@@ -728,8 +741,8 @@
                 'info.feature7': 'Lijst printen',
                 'info.feature8': 'Kaarten maken (Standaard Google, OpenStreetMap of Topografische kaartweergave)',
                 'download.title': 'Download',
-                'download.button': 'Download Cachelistprinter',
-                'download.version': 'Versie 1.3',
+                'download.button': 'Binnenkort: Cachelistprinter V1.4 te downloaden',
+                'download.version': '',
                 'download.compatible': 'Compatibel met Google Chrome en andere Chromium-gebaseerde browsers.',
                 'download.alert': 'Download link wordt hier toegevoegd',
                 'donation.title': 'Ondersteun dit project',
@@ -757,8 +770,8 @@
                 'info.feature7': 'Liste drucken',
                 'info.feature8': 'Karten erstellen (Standard Google, OpenStreetMap oder topografische Kartenansicht)',
                 'download.title': 'Download',
-                'download.button': 'Cachelistprinter herunterladen',
-                'download.version': 'Version 1.3',
+                'download.button': 'Bald verfügbar: Cachelistprinter V1.4 zum Download',
+                'download.version': '',
                 'download.compatible': 'Kompatibel mit Google Chrome und anderen Chromium-basierten Browsern.',
                 'download.alert': 'Download-Link wird hier hinzugefügt',
                 'donation.title': 'Unterstützen Sie dieses Projekt',
@@ -786,8 +799,8 @@
                 'info.feature7': 'Print list',
                 'info.feature8': 'Create maps (Standard Google, OpenStreetMap or Topographic map view)',
                 'download.title': 'Download',
-                'download.button': 'Download Cachelistprinter',
-                'download.version': 'Version 1.3',
+                'download.button': 'Coming soon: Cachelistprinter V1.4 available for download',
+                'download.version': '',
                 'download.compatible': 'Compatible with Google Chrome and other Chromium-based browsers.',
                 'download.alert': 'Download link will be added here',
                 'donation.title': 'Support this project',
@@ -815,8 +828,8 @@
                 'info.feature7': 'Imprimer la liste',
                 'info.feature8': 'Créer des cartes (Google standard, OpenStreetMap ou vue cartographique topographique)',
                 'download.title': 'Télécharger',
-                'download.button': 'Télécharger Cachelistprinter',
-                'download.version': 'Version 1.3',
+                'download.button': 'Bientôt disponible: Cachelistprinter V1.4 à télécharger',
+                'download.version': '',
                 'download.compatible': 'Compatible avec Google Chrome et autres navigateurs basés sur Chromium.',
                 'download.alert': 'Le lien de téléchargement sera ajouté ici',
                 'donation.title': 'Soutenez ce projet',
@@ -876,21 +889,15 @@
 
         // Initialize language on page load
         document.addEventListener('DOMContentLoaded', function() {
-            // Set download URL
+            // Set download URL - UITGESCHAKELD voor V1.4
             const downloadButton = document.getElementById('download-button');
             if (downloadButton) {
-                if (siteConfig.downloadUrl && siteConfig.downloadUrl !== '#') {
-                    // Gebruik de originele link direct en open in nieuw tabblad
-                    downloadButton.href = siteConfig.downloadUrl;
-                    downloadButton.target = '_blank'; // Open in nieuw tabblad
-                    downloadButton.rel = 'noopener noreferrer'; // Veiligheid
-                    downloadButton.onclick = null; // Verwijder de oude alert
-                } else {
-                    downloadButton.onclick = function(e) {
-                        e.preventDefault();
-                        alert(getTranslation('download.alert'));
-                    };
-                }
+                // Knop is uitgeschakeld - geen actie
+                downloadButton.href = '#';
+                downloadButton.onclick = function(e) {
+                    e.preventDefault();
+                    return false;
+                };
             }
             
             // Set donation URL for QR code and link
