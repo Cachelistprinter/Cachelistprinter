@@ -432,120 +432,6 @@
             margin-top: 8px;
         }
 
-        /* Post-it Note */
-        .post-it-note {
-            background: linear-gradient(135deg, #ffeb3b 0%, #fff176 100%);
-            border: 1px solid rgba(0, 0, 0, 0.2);
-            border-radius: 2px;
-            padding: 12px 15px;
-            margin: 15px auto;
-            max-width: 500px;
-            box-shadow: 
-                0 2px 4px rgba(0, 0, 0, 0.2),
-                0 0 0 1px rgba(255, 235, 59, 0.3) inset;
-            transform: rotate(-1.5deg);
-            position: relative;
-            font-size: 13px;
-            line-height: 1.5;
-            color: #333;
-            text-align: left;
-        }
-
-        .post-it-note::before {
-            content: '';
-            position: absolute;
-            top: -5px;
-            right: 15px;
-            width: 20px;
-            height: 20px;
-            background: rgba(255, 255, 255, 0.5);
-            border-radius: 50%;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-        }
-
-        .post-it-note strong {
-            color: #d32f2f;
-            font-weight: bold;
-        }
-
-        @media (max-width: 768px) {
-            .post-it-note {
-                max-width: 100%;
-                font-size: 12px;
-                padding: 10px 12px;
-            }
-        }
-
-        /* Changelog Section */
-        .changelog-section {
-            background: #f9f9f9;
-            border-left: 4px solid #6B8E23;
-            padding: 15px 20px;
-            margin: 20px 0;
-            border-radius: 4px;
-        }
-
-        .changelog-section h4 {
-            font-family: Tahoma, sans-serif;
-            font-size: 16px;
-            font-weight: bold;
-            color: #6B8E23;
-            margin-bottom: 12px;
-            margin-top: 0;
-        }
-
-        .changelog-list {
-            list-style: none;
-            padding-left: 0;
-            margin: 0;
-        }
-
-        .changelog-list li {
-            padding: 6px 0;
-            padding-left: 25px;
-            position: relative;
-            font-size: 14px;
-            line-height: 1.6;
-            color: #424242;
-        }
-
-        .changelog-list li::before {
-            content: '→';
-            position: absolute;
-            left: 0;
-            color: #6B8E23;
-            font-weight: bold;
-            font-size: 16px;
-        }
-
-        .changelog-list li.new {
-            color: #2e7d32;
-        }
-
-        .changelog-list li.new::before {
-            content: '+';
-            color: #2e7d32;
-        }
-
-        .changelog-list li.fixed {
-            color: #d32f2f;
-        }
-
-        .changelog-list li.fixed::before {
-            content: '✓';
-            color: #d32f2f;
-        }
-
-        @media (max-width: 768px) {
-            .changelog-section {
-                padding: 12px 15px;
-            }
-
-            .changelog-list li {
-                font-size: 13px;
-            }
-        }
-
         /* Donation Section */
         .donation-section {
             text-align: center;
@@ -768,29 +654,9 @@
                         <span class="button-text" data-i18n="download.button">Download Cachelistprinter</span>
                         <span class="button-subtext" data-i18n="download.version">Versie 1.4</span>
                     </a>
-                    <div class="post-it-note" data-i18n="download.important-note">
-                        <strong>Belangrijk:</strong> Als je versie 1.3 al hebt geïnstalleerd, verwijder deze dan volledig voordat je versie 1.4 installeert.
-                    </div>
                     <p class="download-info" data-i18n="download.compatible">
                         Compatibel met Google Chrome en andere Chromium-gebaseerde browsers.
                     </p>
-                </section>
-
-                <section id="changelog" class="section">
-                    <h3 data-i18n="changelog.title">Wat is nieuw in versie 1.4?</h3>
-                    <div class="changelog-section">
-                        <h4 data-i18n="changelog.subtitle">Aanpassingen en toevoegingen:</h4>
-                        <ul class="changelog-list">
-                            <li data-i18n="changelog.item1">Er is een leesmij.txt bestand toegevoegd voor installatie-instructies</li>
-                            <li data-i18n="changelog.item2">De handleiding is bijgewerkt</li>
-                            <li data-i18n="changelog.item3">In de lijst is de GC-code toegevoegd</li>
-                            <li data-i18n="changelog.item4">De sortering is verbeterd</li>
-                            <li data-i18n="changelog.item5">Kaart heeft nu het juiste logo</li>
-                            <li data-i18n="changelog.item6">GPX lijst werkt nu voor een lijst uit Geocaching.com</li>
-                            <li data-i18n="changelog.item7">GPX lijst werkt nu ook voor een PQ (Pocket Query) uit Geocaching.com</li>
-                            <li data-i18n="changelog.item8">GPX lijst werkt nu ook voor bestanden uit GSAK</li>
-                        </ul>
-                    </div>
                 </section>
 
                 <section class="section donation-section">
@@ -864,19 +730,8 @@
                 'download.title': 'Download',
                 'download.button': 'Download Cachelistprinter',
                 'download.version': 'Versie 1.4',
-                'download.important-note': '<strong>Belangrijk:</strong> Als je versie 1.3 al hebt geïnstalleerd, verwijder deze dan volledig voordat je versie 1.4 installeert.',
                 'download.compatible': 'Compatibel met Google Chrome en andere Chromium-gebaseerde browsers.',
                 'download.alert': 'Download link wordt hier toegevoegd',
-                'changelog.title': 'Wat is nieuw in versie 1.4?',
-                'changelog.subtitle': 'Aanpassingen en toevoegingen:',
-                'changelog.item1': 'Er is een leesmij.txt bestand toegevoegd voor installatie-instructies',
-                'changelog.item2': 'De handleiding is bijgewerkt',
-                'changelog.item3': 'In de lijst is de GC-code toegevoegd',
-                'changelog.item4': 'De sortering is verbeterd',
-                'changelog.item5': 'Kaart heeft nu het juiste logo',
-                'changelog.item6': 'GPX lijst werkt nu voor een lijst uit Geocaching.com',
-                'changelog.item7': 'GPX lijst werkt nu ook voor een PQ (Pocket Query) uit Geocaching.com',
-                'changelog.item8': 'GPX lijst werkt nu ook voor bestanden uit GSAK',
                 'donation.title': 'Ondersteun dit project',
                 'donation.description': 'Als je Cachelistprinter nuttig vindt, overweeg dan een donatie om de ontwikkeling te ondersteunen.',
                 'donation.qr-text': 'Scan de QR code om te doneren:',
@@ -904,19 +759,8 @@
                 'download.title': 'Download',
                 'download.button': 'Cachelistprinter herunterladen',
                 'download.version': 'Version 1.4',
-                'download.important-note': '<strong>Wichtig:</strong> Wenn Sie Version 1.3 bereits installiert haben, entfernen Sie diese vollständig, bevor Sie Version 1.4 installieren.',
                 'download.compatible': 'Kompatibel mit Google Chrome und anderen Chromium-basierten Browsern.',
                 'download.alert': 'Download-Link wird hier hinzugefügt',
-                'changelog.title': 'Was ist neu in Version 1.4?',
-                'changelog.subtitle': 'Anpassungen und Ergänzungen:',
-                'changelog.item1': 'Eine leesmij.txt Datei wurde für Installationsanweisungen hinzugefügt',
-                'changelog.item2': 'Das Handbuch wurde aktualisiert',
-                'changelog.item3': 'In der Liste wurde der GC-Code hinzugefügt',
-                'changelog.item4': 'Die Sortierung wurde verbessert',
-                'changelog.item5': 'Karte hat jetzt das richtige Logo',
-                'changelog.item6': 'GPX-Liste funktioniert jetzt für eine Liste von Geocaching.com',
-                'changelog.item7': 'GPX-Liste funktioniert jetzt auch für eine PQ (Pocket Query) von Geocaching.com',
-                'changelog.item8': 'GPX-Liste funktioniert jetzt auch für Dateien aus GSAK',
                 'donation.title': 'Unterstützen Sie dieses Projekt',
                 'donation.description': 'Wenn Sie Cachelistprinter nützlich finden, erwägen Sie bitte eine Spende, um die Entwicklung zu unterstützen.',
                 'donation.qr-text': 'Scannen Sie den QR-Code, um zu spenden:',
@@ -944,19 +788,8 @@
                 'download.title': 'Download',
                 'download.button': 'Download Cachelistprinter',
                 'download.version': 'Version 1.4',
-                'download.important-note': '<strong>Important:</strong> If you already have version 1.3 installed, please completely remove it before installing version 1.4.',
                 'download.compatible': 'Compatible with Google Chrome and other Chromium-based browsers.',
                 'download.alert': 'Download link will be added here',
-                'changelog.title': 'What\'s new in version 1.4?',
-                'changelog.subtitle': 'Changes and additions:',
-                'changelog.item1': 'A leesmij.txt file has been added for installation instructions',
-                'changelog.item2': 'The manual has been updated',
-                'changelog.item3': 'The GC code has been added to the list',
-                'changelog.item4': 'Sorting has been improved',
-                'changelog.item5': 'Map now has the correct logo',
-                'changelog.item6': 'GPX list now works for a list from Geocaching.com',
-                'changelog.item7': 'GPX list now also works for a PQ (Pocket Query) from Geocaching.com',
-                'changelog.item8': 'GPX list now also works for files from GSAK',
                 'donation.title': 'Support this project',
                 'donation.description': 'If you find Cachelistprinter useful, please consider a donation to support development.',
                 'donation.qr-text': 'Scan the QR code to donate:',
@@ -984,19 +817,8 @@
                 'download.title': 'Télécharger',
                 'download.button': 'Télécharger Cachelistprinter',
                 'download.version': 'Version 1.4',
-                'download.important-note': '<strong>Important:</strong> Si vous avez déjà installé la version 1.3, veuillez la supprimer complètement avant d\'installer la version 1.4.',
                 'download.compatible': 'Compatible avec Google Chrome et autres navigateurs basés sur Chromium.',
                 'download.alert': 'Le lien de téléchargement sera ajouté ici',
-                'changelog.title': 'Quoi de neuf dans la version 1.4?',
-                'changelog.subtitle': 'Modifications et ajouts:',
-                'changelog.item1': 'Un fichier leesmij.txt a été ajouté pour les instructions d\'installation',
-                'changelog.item2': 'Le manuel a été mis à jour',
-                'changelog.item3': 'Le code GC a été ajouté à la liste',
-                'changelog.item4': 'Le tri a été amélioré',
-                'changelog.item5': 'La carte a maintenant le bon logo',
-                'changelog.item6': 'La liste GPX fonctionne maintenant pour une liste de Geocaching.com',
-                'changelog.item7': 'La liste GPX fonctionne maintenant aussi pour une PQ (Pocket Query) de Geocaching.com',
-                'changelog.item8': 'La liste GPX fonctionne maintenant aussi pour les fichiers de GSAK',
                 'donation.title': 'Soutenez ce projet',
                 'donation.description': 'Si vous trouvez Cachelistprinter utile, veuillez envisager un don pour soutenir le développement.',
                 'donation.qr-text': 'Scannez le code QR pour faire un don:',
