@@ -414,6 +414,37 @@
             transform: translateY(0);
         }
 
+        .facebook-link-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: transparent;
+            padding: 0;
+            border-radius: 0;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+            width: 36px;
+            height: 36px;
+        }
+
+        .facebook-link-button img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .facebook-link-button:hover {
+            transform: translateY(-1px);
+            opacity: 0.8;
+        }
+
+        .facebook-link-button:active {
+            transform: translateY(0);
+            opacity: 0.9;
+        }
+
         .button-text {
             display: block;
         }
@@ -430,6 +461,28 @@
             font-size: 12px;
             color: #666;
             margin-top: 8px;
+        }
+
+        /* Download Instructions Image */
+        .download-instructions-wrapper {
+            position: relative;
+            margin: 20px 0;
+        }
+
+        .download-instructions-image {
+            position: absolute;
+            right: 100px;
+            top: -40px;
+            width: 280px;
+            height: auto;
+            max-width: 280px;
+            transform: rotate(8deg);
+            flex-shrink: 0;
+            z-index: 1;
+            background: transparent;
+            border: none;
+            padding: 0;
+            object-fit: contain;
         }
 
         /* Donation Section */
@@ -598,7 +651,12 @@
 <body>
     <header class="header-bar">
         <div class="container">
-            <h1>Cachelistprinter</h1>
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <a href="https://www.facebook.com/groups/2301719180351721/" target="_blank" rel="noopener noreferrer" class="facebook-link-button" aria-label="Word lid van onze Facebook groep" title="Word lid van onze Facebook groep">
+                    <img src="Facebook-logo.png" alt="Facebook" style="width: 100%; height: 100%; object-fit: contain;">
+                </a>
+                <h1>Cachelistprinter</h1>
+            </div>
             <nav>
                 <a href="#home" data-i18n="nav.home">Home</a>
                 <a href="#download" data-i18n="nav.download">Download</a>
@@ -650,13 +708,18 @@
 
                 <section id="download" class="section">
                     <h3 data-i18n="download.title">Download</h3>
-                    <a href="#" class="download-button" id="download-button">
-                        <span class="button-text" data-i18n="download.button">Download Cachelistprinter</span>
-                        <span class="button-subtext" data-i18n="download.version">Versie 1.4</span>
-                    </a>
-                    <p class="download-info" data-i18n="download.compatible">
-                        Compatibel met Google Chrome en andere Chromium-gebaseerde browsers.
-                    </p>
+                    <div class="download-instructions-wrapper">
+                        <div>
+                            <a href="#" class="download-button" id="download-button">
+                                <span class="button-text" data-i18n="download.button">Download Cachelistprinter</span>
+                                <span class="button-subtext" data-i18n="download.version">Versie 1.4</span>
+                            </a>
+                            <p class="download-info" data-i18n="download.compatible">
+                                Compatibel met Google Chrome en andere Chromium-gebaseerde browsers.
+                            </p>
+                        </div>
+                        <img id="download-instructions-image" src="Download instructie NE.png" alt="Download instructies" class="download-instructions-image">
+                    </div>
                 </section>
 
                 <section class="section donation-section">
@@ -728,6 +791,7 @@
                 'info.feature7': 'Lijst printen',
                 'info.feature8': 'Kaarten maken (Standaard Google, OpenStreetMap of Topografische kaartweergave)',
                 'download.title': 'Download',
+                'download.facebook': 'Word lid van onze Facebook groep',
                 'download.button': 'Download Cachelistprinter',
                 'download.version': 'Versie 1.4',
                 'download.compatible': 'Compatibel met Google Chrome en andere Chromium-gebaseerde browsers.',
@@ -757,6 +821,7 @@
                 'info.feature7': 'Liste drucken',
                 'info.feature8': 'Karten erstellen (Standard Google, OpenStreetMap oder topografische Kartenansicht)',
                 'download.title': 'Download',
+                'download.facebook': 'Werden Sie Mitglied unserer Facebook-Gruppe',
                 'download.button': 'Cachelistprinter herunterladen',
                 'download.version': 'Version 1.4',
                 'download.compatible': 'Kompatibel mit Google Chrome und anderen Chromium-basierten Browsern.',
@@ -786,6 +851,7 @@
                 'info.feature7': 'Print list',
                 'info.feature8': 'Create maps (Standard Google, OpenStreetMap or Topographic map view)',
                 'download.title': 'Download',
+                'download.facebook': 'Join our Facebook group',
                 'download.button': 'Download Cachelistprinter',
                 'download.version': 'Version 1.4',
                 'download.compatible': 'Compatible with Google Chrome and other Chromium-based browsers.',
@@ -815,6 +881,7 @@
                 'info.feature7': 'Imprimer la liste',
                 'info.feature8': 'Créer des cartes (Google standard, OpenStreetMap ou vue cartographique topographique)',
                 'download.title': 'Télécharger',
+                'download.facebook': 'Rejoignez notre groupe Facebook',
                 'download.button': 'Télécharger Cachelistprinter',
                 'download.version': 'Version 1.4',
                 'download.compatible': 'Compatible avec Google Chrome et autres navigateurs basés sur Chromium.',
@@ -872,6 +939,24 @@
                     flag.classList.add('active');
                 }
             });
+            
+            // Update download instructions image based on language
+            const downloadInstructionsImage = document.getElementById('download-instructions-image');
+            if (downloadInstructionsImage) {
+                let imageSrc;
+                if (lang === 'nl') {
+                    imageSrc = 'Download instructie NE.png';
+                } else {
+                    // For de, en, fr use EN version
+                    imageSrc = 'Download instructie EN.png';
+                }
+                // Get the base URL without query parameters
+                const currentSrc = downloadInstructionsImage.src.split('?')[0].split('/').pop();
+                // Update if different
+                if (currentSrc !== imageSrc) {
+                    downloadInstructionsImage.src = imageSrc;
+                }
+            }
         }
 
         // Initialize language on page load
@@ -905,8 +990,6 @@
                 donationLink.href = siteConfig.donationUrl;
             }
             
-            changeLanguage(currentLang);
-            
             // Add click handlers to language flags
             document.querySelectorAll('.language-flag').forEach(flag => {
                 flag.addEventListener('click', function() {
@@ -914,6 +997,9 @@
                     changeLanguage(lang);
                 });
             });
+            
+            // Initialize language (this will also set the correct image)
+            changeLanguage(currentLang);
             
             // Smooth scrolling for anchor links (na download button setup, zodat href al is aangepast)
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
