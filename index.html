@@ -950,12 +950,8 @@
                     // For de, en, fr use EN version
                     imageSrc = 'Download instructie EN.png';
                 }
-                // Get the base URL without query parameters
-                const currentSrc = downloadInstructionsImage.src.split('?')[0].split('/').pop();
-                // Update if different
-                if (currentSrc !== imageSrc) {
-                    downloadInstructionsImage.src = imageSrc;
-                }
+                // Always update the image source
+                downloadInstructionsImage.src = imageSrc;
             }
         }
 
