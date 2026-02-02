@@ -5,8 +5,9 @@
     
     Om de download- of donatielink aan te passen:
     
-    1. Ga naar regel 772 (zoek naar "CONFIGURATIE - Pas deze links aan")
+    1. Ga naar regel 765 (zoek naar "CONFIGURATIE - Pas deze links aan")
     2. Pas daar de siteConfig aan:
+       - updaterUrl: voor de updater (V1.4 → V2.0)
        - downloadUrl: voor de download link
        - donationUrl: voor de donatie link (QR code wordt automatisch bijgewerkt)
     
@@ -205,7 +206,7 @@
         }
 
         .section#info {
-            margin-bottom: 55px;
+            margin-bottom: 125px;
         }
 
         .section#download {
@@ -235,6 +236,15 @@
             margin-bottom: 15px;
             border-bottom: 1px lightgray dotted;
             padding-bottom: 5px;
+        }
+
+        #download {
+            margin-top: 5em;
+            padding-top: 120px;  /* Ruimte zodat "Download"-titel volledig onder groene header (50px) komt */
+        }
+
+        #download h3 {
+            margin-top: 0;  /* padding-top van #download zorgt al voor ruimte */
         }
 
         /* Logo/Icon Section */
@@ -358,6 +368,34 @@
             transform: translateY(0);
         }
 
+        .download-updater-button {
+            display: inline-block;
+            background-image: linear-gradient(to bottom, rgb(243, 243, 243), rgb(200, 200, 200));
+            background-color: whiteSmoke;
+            color: rgb(80, 80, 80);
+            padding: 15px 30px;
+            border-radius: 13px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            transition: all 0.2s;
+            margin-bottom: 15px;
+        }
+
+        .download-updater-button:hover {
+            background-image: linear-gradient(to bottom, rgb(160, 240, 0), rgb(32, 208, 0));
+            color: rgba(0, 0, 0, 0.9);
+            transform: translateY(-2px);
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .download-updater-button:active {
+            background-image: linear-gradient(to bottom, rgb(32, 208, 0), rgb(160, 240, 0));
+            transform: translateY(0);
+        }
+
         .donation-link-button {
             display: inline-block;
             background-image: linear-gradient(to bottom, rgb(243, 243, 243), rgb(200, 200, 200));
@@ -382,34 +420,6 @@
         }
 
         .donation-link-button:active {
-            background-image: linear-gradient(to bottom, rgb(32, 208, 0), rgb(160, 240, 0));
-            transform: translateY(0);
-        }
-
-        .info-link-button {
-            display: inline-block;
-            background-image: linear-gradient(to bottom, rgb(243, 243, 243), rgb(200, 200, 200));
-            background-color: whiteSmoke;
-            color: rgb(80, 80, 80);
-            padding: 8px 16px;
-            border-radius: 13px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 12px;
-            cursor: pointer;
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            transition: all 0.2s;
-            margin-top: 40px;
-        }
-
-        .info-link-button:hover {
-            background-image: linear-gradient(to bottom, rgb(160, 240, 0), rgb(32, 208, 0));
-            color: rgba(0, 0, 0, 0.9);
-            transform: translateY(-2px);
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        .info-link-button:active {
             background-image: linear-gradient(to bottom, rgb(32, 208, 0), rgb(160, 240, 0));
             transform: translateY(0);
         }
@@ -469,6 +479,10 @@
             margin: 20px 0;
         }
 
+        .download-buttons-column {
+            transform: translateX(-50px);
+        }
+
         .download-instructions-image {
             position: absolute;
             right: 100px;
@@ -496,6 +510,13 @@
             margin-bottom: 8px;
         }
 
+        .donation-tip {
+            font-size: 0.95em;
+            color: #5a5a5a;
+            font-style: italic;
+            margin-top: 6px;
+            margin-bottom: 8px;
+        }
 
         .donation-content-wrapper {
             display: flex;
@@ -590,6 +611,40 @@
             opacity: 0.7;
         }
 
+        .footer-facebook {
+            text-align: center;
+            padding: 0 0 20px 0;
+            margin-top: 0;
+            background: transparent;
+        }
+
+        .footer-facebook-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background-color: #1877F2;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.2s;
+            box-shadow: 0 2px 8px rgba(24, 119, 242, 0.3);
+        }
+
+        .footer-facebook-button:hover {
+            background-color: #166FE5;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(24, 119, 242, 0.4);
+        }
+
+        .footer-facebook-button svg {
+            width: 24px;
+            height: 24px;
+            fill: white;
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             .container {
@@ -647,6 +702,7 @@
             }
         }
     </style>
+    <script async src="https://cloud.umami.is/script.js" data-website-id="e7c24b2f-0dd7-4fe6-9e57-57359225f1c5"></script>
 </head>
 <body>
     <header class="header-bar">
@@ -690,14 +746,13 @@
                     <div class="features-container">
                         <div class="features-list-wrapper">
                             <ul class="features-list">
-                                <li data-i18n="info.feature1">Import GPX-bestand uit Geocaching.com</li>
+                                <li data-i18n="info.feature1">Import GPX-bestand uit Geocaching.com, Pocket Query of GSAK</li>
                                 <li data-i18n="info.feature2">Volgorde lijst aanpasbaar</li>
                                 <li data-i18n="info.feature3">Lijst volledig verwijderen</li>
-                                <li data-i18n="info.feature4">Start info toevoegen</li>
-                                <li data-i18n="info.feature5">Bonus info toevoegen</li>
-                                <li data-i18n="info.feature6">Hints laten vertalen</li>
-                                <li data-i18n="info.feature7">Lijst printen</li>
-                                <li data-i18n="info.feature8">Kaarten maken (Standaard Google, OpenStreetMap of Topografische kaartweergave)</li>
+                                <li data-i18n="info.feature4">Extra info (keuze: Start info, Waypoint en Bonus)</li>
+                                <li data-i18n="info.feature5">Hints laten vertalen</li>
+                                <li data-i18n="info.feature6">Lijst printen</li>
+                                <li data-i18n="info.feature7">Kaarten maken (Google, OpenStreetMap of topografische weergave)</li>
                             </ul>
                         </div>
                         <div class="features-image">
@@ -709,10 +764,14 @@
                 <section id="download" class="section">
                     <h3 data-i18n="download.title">Download</h3>
                     <div class="download-instructions-wrapper">
-                        <div>
+                        <div class="download-buttons-column">
                             <a href="#" class="download-button" id="download-button">
                                 <span class="button-text" data-i18n="download.button">Download Cachelistprinter</span>
                                 <span class="button-subtext" data-i18n="download.version">Versie 1.4</span>
+                            </a>
+                            <a href="#" class="download-updater-button" id="download-updater-button">
+                                <span class="button-text" data-i18n="download.updater-button">Update V1.4 naar V2.0</span>
+                                <span class="button-subtext" data-i18n="download.updater-version">Updater</span>
                             </a>
                             <p class="download-info" data-i18n="download.compatible">
                                 Compatibel met Google Chrome en andere Chromium-gebaseerde browsers.<br>
@@ -725,7 +784,8 @@
 
                 <section class="section donation-section">
                     <h3 data-i18n="donation.title">Ondersteun dit project</h3>
-                    <p data-i18n="donation.description" style="margin-bottom: 8px;">Als je Cachelistprinter nuttig vindt, overweeg dan een donatie om de ontwikkeling te ondersteunen.</p>
+                    <p data-i18n="donation.description" style="margin-bottom: 4px;">Als je Cachelistprinter nuttig vindt, overweeg dan een donatie om de ontwikkeling te ondersteunen.</p>
+                    <p class="donation-tip" data-i18n="donation.description-tip">In het programma kun je ook op het koffie-icoontje klikken om te doneren.</p>
                     <div class="donation-content-wrapper">
                         <div class="donation-button-image">
                             <img src="Bedankt voor de koffie.png" alt="Bedankt voor de koffie">
@@ -747,11 +807,19 @@
                                data-i18n="donation.qr-link">Of klik hier om direct te doneren</a>
                         </div>
                     </div>
-                    <a href="mailto:cmus@home.nl" class="info-link-button" data-i18n="donation.note">Voor contact mail naar cmus@home.nl</a>
                 </section>
             </div>
         </div>
     </main>
+
+    <div class="footer-facebook">
+        <a href="https://www.facebook.com/groups/2301719180351721/" target="_blank" rel="noopener noreferrer" class="footer-facebook-button" aria-label="Facebook Groep Cachelistprinter">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white">
+                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+            </svg>
+            <span data-i18n="footer.facebook">Word lid van onze Facebook groep</span>
+        </a>
+    </div>
 
     <footer class="footer-bar">
         <div class="container">
@@ -769,7 +837,8 @@
         // De QR code wordt automatisch bijgewerkt wanneer je de donatielink aanpast.
         // ============================================
         const siteConfig = {
-            downloadUrl: 'https://1drv.ms/u/c/d14f47efc6088a2b/IQBpcCD1sENzTYMkjfdafidoAUzjLSxTWlSJwyVDZcTyWGU?e=DZcdOY',  // Vervang '#' door de echte download link (bijv. 'https://github.com/.../releases/download/.../Cachelistprinter.zip')
+            updaterUrl: 'https://1drv.ms/u/c/d14f47efc6088a2b/IQCDKxGZlJypTaGN9aHHQJZ1Abxmt-dxyUWGGzG2UJp_13k?e=PqC6sx',  // Updater V1.4 → V2.0
+            downloadUrl: 'https://1drv.ms/u/c/d14f47efc6088a2b/IQCmoxBiRP_rSofR7XzQLq2AATv8oZLczJxekkJgPj31agw?e=0i26Kh',  // Download V1.4
             donationUrl: 'https://ko-fi.com/cachelistprinter'  // Pas deze aan voor een nieuwe donatielink
         };
         // ============================================
@@ -783,28 +852,31 @@
                 'home.title': 'Cachelistprinter',
                 'home.description': 'Cachelistprinter is een standalone Electron-applicatie voor het beheren en afdrukken van geocache-lijsten. Het programma is gebaseerd op en vervangt het originele Geoprinter programma. Met Cachelistprinter kun je GPX-bestanden importeren, cachelijsten maken met start en bonus info, hints vertalen, en zowel lijsten als kaarten afdrukken. Het programma werkt volledig onafhankelijk en draait op Windows 10/11 (64-bit) zonder extra software-installaties.',
                 'info.title': 'Functies',
-                'info.feature1': 'Import GPX-bestand uit Geocaching.com',
+                'info.feature1': 'Import GPX-bestand uit Geocaching.com, Pocket Query of GSAK',
                 'info.feature2': 'Volgorde lijst aanpasbaar',
                 'info.feature3': 'Lijst volledig verwijderen',
-                'info.feature4': 'Start info toevoegen',
-                'info.feature5': 'Bonus info toevoegen',
-                'info.feature6': 'Hints laten vertalen',
-                'info.feature7': 'Lijst printen',
-                'info.feature8': 'Kaarten maken (Standaard Google, OpenStreetMap of Topografische kaartweergave)',
+                'info.feature4': 'Extra info (keuze: Start info, Waypoint en Bonus)',
+                'info.feature5': 'Hints laten vertalen',
+                'info.feature6': 'Lijst printen',
+                'info.feature7': 'Kaarten maken (Google, OpenStreetMap of topografische weergave)',
                 'download.title': 'Download',
                 'download.facebook': 'Word lid van onze Facebook groep',
+                'download.updater-button': 'Update V1.4 naar V2.0',
+                'download.updater-version': 'Updater',
                 'download.button': 'Download Cachelistprinter',
                 'download.version': 'Versie 1.4',
                 'download.compatible': 'Compatibel met Google Chrome en andere Chromium-gebaseerde browsers.<br>Vereist Windows 10/11 (64-bit).',
                 'download.alert': 'Download link wordt hier toegevoegd',
                 'donation.title': 'Ondersteun dit project',
                 'donation.description': 'Als je Cachelistprinter nuttig vindt, overweeg dan een donatie om de ontwikkeling te ondersteunen.',
+                'donation.description-tip': 'In het programma kun je ook op het koffie-icoontje klikken om te doneren.',
                 'donation.qr-text': 'Scan de QR code om te doneren:',
                 'donation.qr-link': 'Of klik hier om direct te doneren',
                 'donation.note': 'Voor contact mail naar cmus@home.nl',
                 'donation.confirm': 'Je wordt doorgestuurd naar de donatiepagina. Doorgaan?',
                 'footer.created': 'Gemaakt door: <strong>Cmus</strong> | Gebaseerd op Geoprinter van <strong>Walvë FamIso</strong>',
-                'footer.copyright': '© 2025 Cachelistprinter. Alle rechten voorbehouden.'
+                'footer.copyright': '© 2025 Cachelistprinter. Alle rechten voorbehouden.',
+                'footer.facebook': 'Word lid van onze Facebook groep'
             },
             de: {
                 'page.title': 'Cachelistprinter - Info & Download',
@@ -813,28 +885,31 @@
                 'home.title': 'Cachelistprinter',
                 'home.description': 'Cachelistprinter ist eine eigenständige Electron-Anwendung zum Verwalten und Drucken von Geocache-Listen. Das Programm basiert auf und ersetzt das ursprüngliche Geoprinter-Programm. Mit Cachelistprinter können Sie GPX-Dateien importieren, Cache-Listen mit Start- und Bonus-Info erstellen, Hinweise übersetzen und sowohl Listen als auch Karten drucken. Das Programm funktioniert vollständig unabhängig und läuft unter Windows 10/11 (64-bit) ohne zusätzliche Software-Installationen.',
                 'info.title': 'Funktionen',
-                'info.feature1': 'GPX-Datei von Geocaching.com importieren',
+                'info.feature1': 'GPX-Datei von Geocaching.com, Pocket Query oder GSAK importieren',
                 'info.feature2': 'Listenreihenfolge anpassbar',
                 'info.feature3': 'Liste vollständig löschen',
-                'info.feature4': 'Start-Info hinzufügen',
-                'info.feature5': 'Bonus-Info hinzufügen',
-                'info.feature6': 'Hinweise übersetzen lassen',
-                'info.feature7': 'Liste drucken',
-                'info.feature8': 'Karten erstellen (Standard Google, OpenStreetMap oder topografische Kartenansicht)',
+                'info.feature4': 'Zusatzinfo (Wahl: Start-Info, Wegpunkt und Bonus)',
+                'info.feature5': 'Hinweise übersetzen lassen',
+                'info.feature6': 'Liste drucken',
+                'info.feature7': 'Karten erstellen (Google, OpenStreetMap oder topografische Ansicht)',
                 'download.title': 'Download',
                 'download.facebook': 'Werden Sie Mitglied unserer Facebook-Gruppe',
+                'download.updater-button': 'Update V1.4 auf V2.0',
+                'download.updater-version': 'Updater',
                 'download.button': 'Cachelistprinter herunterladen',
                 'download.version': 'Version 1.4',
                 'download.compatible': 'Kompatibel mit Google Chrome und anderen Chromium-basierten Browsern.<br>Erfordert Windows 10/11 (64-bit).',
                 'download.alert': 'Download-Link wird hier hinzugefügt',
                 'donation.title': 'Unterstützen Sie dieses Projekt',
                 'donation.description': 'Wenn Sie Cachelistprinter nützlich finden, erwägen Sie bitte eine Spende, um die Entwicklung zu unterstützen.',
+                'donation.description-tip': 'Im Programm können Sie auch auf das Kaffee-Symbol klicken, um zu spenden.',
                 'donation.qr-text': 'Scannen Sie den QR-Code, um zu spenden:',
                 'donation.qr-link': 'Oder klicken Sie hier, um direkt zu spenden',
                 'donation.note': 'Für Informationen können Sie eine E-Mail an cmus@home.nl senden',
                 'donation.confirm': 'Sie werden zur Spenden-Seite weitergeleitet. Fortfahren?',
                 'footer.created': 'Erstellt von: <strong>Cmus</strong> | Basierend auf Geoprinter von <strong>Walvë FamIso</strong>',
-                'footer.copyright': '© 2025 Cachelistprinter. Alle Rechte vorbehalten.'
+                'footer.copyright': '© 2025 Cachelistprinter. Alle Rechte vorbehalten.',
+                'footer.facebook': 'Werden Sie Mitglied unserer Facebook-Gruppe'
             },
             en: {
                 'page.title': 'Cachelistprinter - Info & Download',
@@ -843,28 +918,31 @@
                 'home.title': 'Cachelistprinter',
                 'home.description': 'Cachelistprinter is a standalone Electron application for managing and printing geocache lists. The program is based on and replaces the original Geoprinter program. With Cachelistprinter you can import GPX files, create cache lists with start and bonus info, translate hints, and print both lists and maps. The program works completely independently and runs on Windows 10/11 (64-bit) without additional software installations.',
                 'info.title': 'Features',
-                'info.feature1': 'Import GPX file from Geocaching.com',
+                'info.feature1': 'Import GPX file from Geocaching.com, Pocket Query or GSAK',
                 'info.feature2': 'List order adjustable',
                 'info.feature3': 'Completely delete list',
-                'info.feature4': 'Add start info',
-                'info.feature5': 'Add bonus info',
-                'info.feature6': 'Translate hints',
-                'info.feature7': 'Print list',
-                'info.feature8': 'Create maps (Standard Google, OpenStreetMap or Topographic map view)',
+                'info.feature4': 'Extra info (choice: Start info, Waypoint and Bonus)',
+                'info.feature5': 'Translate hints',
+                'info.feature6': 'Print list',
+                'info.feature7': 'Create maps (Google, OpenStreetMap or topographic view)',
                 'download.title': 'Download',
                 'download.facebook': 'Join our Facebook group',
+                'download.updater-button': 'Update V1.4 to V2.0',
+                'download.updater-version': 'Updater',
                 'download.button': 'Download Cachelistprinter',
                 'download.version': 'Version 1.4',
                 'download.compatible': 'Compatible with Google Chrome and other Chromium-based browsers.<br>Requires Windows 10/11 (64-bit).',
                 'download.alert': 'Download link will be added here',
                 'donation.title': 'Support this project',
                 'donation.description': 'If you find Cachelistprinter useful, please consider a donation to support development.',
+                'donation.description-tip': 'You can also click the coffee icon in the program to donate.',
                 'donation.qr-text': 'Scan the QR code to donate:',
                 'donation.qr-link': 'Or click here to donate directly',
                 'donation.note': 'For information, you can email cmus@home.nl',
                 'donation.confirm': 'You will be redirected to the donation page. Continue?',
                 'footer.created': 'Created by: <strong>Cmus</strong> | Based on Geoprinter by <strong>Walvë FamIso</strong>',
-                'footer.copyright': '© 2025 Cachelistprinter. All rights reserved.'
+                'footer.copyright': '© 2025 Cachelistprinter. All rights reserved.',
+                'footer.facebook': 'Join our Facebook group'
             },
             fr: {
                 'page.title': 'Cachelistprinter - Info & Téléchargement',
@@ -873,28 +951,31 @@
                 'home.title': 'Cachelistprinter',
                 'home.description': 'Cachelistprinter est une application Electron autonome pour gérer et imprimer des listes de géocaches. Le programme est basé sur et remplace le programme Geoprinter original. Avec Cachelistprinter, vous pouvez importer des fichiers GPX, créer des listes de caches avec des informations de départ et bonus, traduire les indices et imprimer à la fois des listes et des cartes. Le programme fonctionne de manière complètement indépendante et fonctionne sous Windows 10/11 (64-bit) sans installations logicielles supplémentaires.',
                 'info.title': 'Fonctionnalités',
-                'info.feature1': 'Importer un fichier GPX depuis Geocaching.com',
+                'info.feature1': 'Importer un fichier GPX depuis Geocaching.com, Pocket Query ou GSAK',
                 'info.feature2': 'Ordre de la liste ajustable',
                 'info.feature3': 'Supprimer complètement la liste',
-                'info.feature4': 'Ajouter des informations de départ',
-                'info.feature5': 'Ajouter des informations bonus',
-                'info.feature6': 'Faire traduire les indices',
-                'info.feature7': 'Imprimer la liste',
-                'info.feature8': 'Créer des cartes (Google standard, OpenStreetMap ou vue cartographique topographique)',
+                'info.feature4': 'Info extra (choix : info départ, waypoint et bonus)',
+                'info.feature5': 'Faire traduire les indices',
+                'info.feature6': 'Imprimer la liste',
+                'info.feature7': 'Créer des cartes (Google, OpenStreetMap ou vue topographique)',
                 'download.title': 'Télécharger',
                 'download.facebook': 'Rejoignez notre groupe Facebook',
+                'download.updater-button': 'Mise à jour V1.4 vers V2.0',
+                'download.updater-version': 'Updater',
                 'download.button': 'Télécharger Cachelistprinter',
                 'download.version': 'Version 1.4',
                 'download.compatible': 'Compatible avec Google Chrome et autres navigateurs basés sur Chromium.<br>Requiert Windows 10/11 (64-bit).',
                 'download.alert': 'Le lien de téléchargement sera ajouté ici',
                 'donation.title': 'Soutenez ce projet',
                 'donation.description': 'Si vous trouvez Cachelistprinter utile, veuillez envisager un don pour soutenir le développement.',
+                'donation.description-tip': 'Dans le programme, vous pouvez aussi cliquer sur l\'icône café pour faire un don.',
                 'donation.qr-text': 'Scannez le code QR pour faire un don:',
                 'donation.qr-link': 'Ou cliquez ici pour faire un don directement',
                 'donation.note': 'Pour plus d\'informations, vous pouvez envoyer un e-mail à cmus@home.nl',
                 'donation.confirm': 'Vous serez redirigé vers la page de don. Continuer?',
                 'footer.created': 'Créé par: <strong>Cmus</strong> | Basé sur Geoprinter par <strong>Walvë FamIso</strong>',
-                'footer.copyright': '© 2025 Cachelistprinter. Tous droits réservés.'
+                'footer.copyright': '© 2025 Cachelistprinter. Tous droits réservés.',
+                'footer.facebook': 'Rejoignez notre groupe Facebook'
             }
         };
 
@@ -958,6 +1039,19 @@
 
         // Initialize language on page load
         document.addEventListener('DOMContentLoaded', function() {
+            // Set updater URL
+            const downloadUpdaterButton = document.getElementById('download-updater-button');
+            if (downloadUpdaterButton) {
+                if (siteConfig.updaterUrl && siteConfig.updaterUrl !== '') {
+                    downloadUpdaterButton.href = siteConfig.updaterUrl;
+                    downloadUpdaterButton.target = '_blank';
+                    downloadUpdaterButton.rel = 'noopener noreferrer';
+                    downloadUpdaterButton.onclick = null;
+                } else {
+                    downloadUpdaterButton.style.display = 'none'; // Verberg knop tot link is ingevuld
+                }
+            }
+            
             // Set download URL
             const downloadButton = document.getElementById('download-button');
             if (downloadButton) {
@@ -1000,8 +1094,8 @@
             
             // Smooth scrolling for anchor links (na download button setup, zodat href al is aangepast)
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                // Sla de download button over - deze heeft nu een externe link
-                if (anchor.id === 'download-button') {
+                // Sla de download- en updater-knoppen over - deze hebben externe links
+                if (anchor.id === 'download-button' || anchor.id === 'download-updater-button') {
                     return;
                 }
                 anchor.addEventListener('click', function (e) {
