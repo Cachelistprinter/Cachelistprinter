@@ -7,7 +7,7 @@
     
     1. Ga naar regel 765 (zoek naar "CONFIGURATIE - Pas deze links aan")
     2. Pas daar de siteConfig aan:
-       - updaterUrl: voor de updater (V1.4 → V2.0)
+       - updaterUrl: voor de updater (V2.0 → V3.0)
        - downloadUrl: voor de download link
        - donationUrl: voor de donatie link (QR code wordt automatisch bijgewerkt)
     
@@ -309,7 +309,8 @@
             max-width: 500px;
         }
 
-        .features-image img {
+        .features-image img,
+        .features-image video {
             width: 100%;
             height: auto;
             border-radius: 4px;
@@ -508,6 +509,15 @@
             text-align: left;
             margin-top: 5px;
             margin-bottom: 8px;
+        }
+
+        .donation-description {
+            font-size: 1.1em;
+            font-weight: 600;
+            background: rgba(160, 240, 0, 0.15);
+            padding: 10px 14px;
+            border-radius: 8px;
+            margin-bottom: 4px;
         }
 
         .donation-tip {
@@ -737,7 +747,7 @@
                         </div>
                     </div>
                     <p class="intro-text" data-i18n="home.description">
-                        Cachelistprinter is een standalone Electron-applicatie voor het beheren en afdrukken van geocache-lijsten. Het programma is gebaseerd op en vervangt het originele Geoprinter programma. Met Cachelistprinter kun je GPX-bestanden importeren, cachelijsten maken met start en bonus info, hints vertalen, en zowel lijsten als kaarten afdrukken. Het programma werkt volledig onafhankelijk en draait op Windows 10/11 (64-bit) zonder extra software-installaties.
+                        Cachelistprinter is een standalone Electron-applicatie voor het beheren en afdrukken van geocache-lijsten. Het programma is gebaseerd op en vervangt het originele Geoprinter programma. Met Cachelistprinter kun je een GPX-bestand importeren, lijsten openen of opslaan als .clp, caches sorteren en verplaatsen, extra info en waypoints toevoegen, hints vertalen en bewerken, en zowel lijsten als kaarten (Google, OSM, Topo) afdrukken. Het programma werkt volledig onafhankelijk en draait op Windows 10/11 (64-bit) zonder extra software-installaties.
                     </p>
                 </section>
 
@@ -746,17 +756,27 @@
                     <div class="features-container">
                         <div class="features-list-wrapper">
                             <ul class="features-list">
-                                <li data-i18n="info.feature1">Import GPX-bestand uit Geocaching.com, Pocket Query of GSAK</li>
-                                <li data-i18n="info.feature2">Volgorde lijst aanpasbaar</li>
-                                <li data-i18n="info.feature3">Lijst volledig verwijderen</li>
-                                <li data-i18n="info.feature4">Extra info (keuze: Start info, Waypoint en Bonus)</li>
-                                <li data-i18n="info.feature5">Hints laten vertalen</li>
-                                <li data-i18n="info.feature6">Lijst printen</li>
-                                <li data-i18n="info.feature7">Kaarten maken (Google, OpenStreetMap of topografische weergave)</li>
+                                <li data-i18n="info.feature1">Import GPX-bestand uit Geocaching.com of GSAK</li>
+                                <li data-i18n="info.feature2">Lijst openen of opslaan als .clp-bestand</li>
+                                <li data-i18n="info.feature3">Instellingen: afstand (km/mi), taal, GC-code weergave</li>
+                                <li data-i18n="info.feature4">Lijst automatisch sorteren op nummers in cache-namen</li>
+                                <li data-i18n="info.feature5">Volgorde handmatig aanpassen (in lijst en op de kaart)</li>
+                                <li data-i18n="info.feature6">Extra info: Start info, Waypoint en Bonus</li>
+                                <li data-i18n="info.feature7">Waypoint-beheer voor Multi- en Virtual caches</li>
+                                <li data-i18n="info.feature8">Hints vertalen en bewerken</li>
+                                <li data-i18n="info.feature9">Lijst printen of als PDF opslaan</li>
+                                <li data-i18n="info.feature10">Kaarten (Google, OSM, Topo); nummers op de kaart wijzigen</li>
+                                <li data-i18n="info.feature11">Lijst volledig verwijderen</li>
                             </ul>
                         </div>
                         <div class="features-image">
-                            <img src="Cachelistprinter V2.0.jpg" alt="Cachelistprinter V2.0">
+                            <video src="slideshow.mp4"
+                                   autoplay
+                                   muted
+                                   loop
+                                   playsinline>
+                                Je browser ondersteunt geen video.
+                            </video>
                         </div>
                     </div>
                 </section>
@@ -765,13 +785,13 @@
                     <h3 data-i18n="download.title">Download</h3>
                     <div class="download-instructions-wrapper">
                         <div class="download-buttons-column">
+                            <a href="#" class="download-updater-button" id="download-updater-button">
+                                <span class="button-text" data-i18n="download.updater-button">Update V2.0 naar V3.0</span>
+                                <span class="button-subtext" data-i18n="download.updater-version">Updater</span>
+                            </a>
                             <a href="#" class="download-button" id="download-button">
                                 <span class="button-text" data-i18n="download.button">Download Cachelistprinter</span>
-                                <span class="button-subtext" data-i18n="download.version">Versie 1.4</span>
-                            </a>
-                            <a href="#" class="download-updater-button" id="download-updater-button">
-                                <span class="button-text" data-i18n="download.updater-button">Update V1.4 naar V2.0</span>
-                                <span class="button-subtext" data-i18n="download.updater-version">Updater</span>
+                                <span class="button-subtext" data-i18n="download.version">Versie 3.0</span>
                             </a>
                             <p class="download-info" data-i18n="download.compatible">
                                 Compatibel met Google Chrome en andere Chromium-gebaseerde browsers.<br>
@@ -784,7 +804,7 @@
 
                 <section class="section donation-section">
                     <h3 data-i18n="donation.title">Ondersteun dit project</h3>
-                    <p data-i18n="donation.description" style="margin-bottom: 4px;">Als je Cachelistprinter nuttig vindt, overweeg dan een donatie om de ontwikkeling te ondersteunen.</p>
+                    <p class="donation-description" data-i18n="donation.description">Als je Cachelistprinter nuttig vindt, overweeg dan een donatie om de ontwikkeling te ondersteunen.</p>
                     <p class="donation-tip" data-i18n="donation.description-tip">In het programma kun je ook op het koffie-icoontje klikken om te doneren.</p>
                     <div class="donation-content-wrapper">
                         <div class="donation-button-image">
@@ -838,8 +858,8 @@
         // De QR code wordt automatisch bijgewerkt wanneer je de donatielink aanpast.
         // ============================================
         const siteConfig = {
-            updaterUrl: 'https://1drv.ms/u/c/d14f47efc6088a2b/IQCDKxGZlJypTaGN9aHHQJZ1AR7hpX_vrUW8IYYxWI4eIcw?e=JnnUrX',  // Updater V1.4 → V2.0
-            downloadUrl: 'https://1drv.ms/u/c/d14f47efc6088a2b/IQCmoxBiRP_rSofR7XzQLq2AAcgyBtXevJBCUABlWCFJHHg?e=RuFP6q',  // Download V1.4
+            updaterUrl: 'https://1drv.ms/f/c/d14f47efc6088a2b/IgCxJ3omXvtOQoZWQ7wpCo-CARvbbZYaNkaGuY_cfeHGXyw?e=Vc9juo',  // Updater V2.0 → V3.0
+            downloadUrl: 'https://1drv.ms/f/c/d14f47efc6088a2b/IgDt2pA-3uesTaY6nG5PRY_-ASD0xP8EbntWwzCfIPx7wJ4?e=jY3uDQ',  // Download V3.0
             donationUrl: 'https://ko-fi.com/cachelistprinter'  // Pas deze aan voor een nieuwe donatielink
         };
         // ============================================
@@ -851,21 +871,25 @@
                 'nav.home': 'Home',
                 'nav.download': 'Download',
                 'home.title': 'Cachelistprinter',
-                'home.description': 'Cachelistprinter is een standalone Electron-applicatie voor het beheren en afdrukken van geocache-lijsten. Het programma is gebaseerd op en vervangt het originele Geoprinter programma. Met Cachelistprinter kun je GPX-bestanden importeren, cachelijsten maken met start en bonus info, hints vertalen, en zowel lijsten als kaarten afdrukken. Het programma werkt volledig onafhankelijk en draait op Windows 10/11 (64-bit) zonder extra software-installaties.',
+                'home.description': 'Cachelistprinter is een standalone Electron-applicatie voor het beheren en afdrukken van geocache-lijsten. Het programma is gebaseerd op en vervangt het originele Geoprinter programma. Met Cachelistprinter kun je een GPX-bestand importeren, lijsten openen of opslaan als .clp, caches sorteren en verplaatsen, extra info en waypoints toevoegen, hints vertalen en bewerken, en zowel lijsten als kaarten (Google, OSM, Topo) afdrukken. Het programma werkt volledig onafhankelijk en draait op Windows 10/11 (64-bit) zonder extra software-installaties.',
                 'info.title': 'Functies',
-                'info.feature1': 'Import GPX-bestand uit Geocaching.com, Pocket Query of GSAK',
-                'info.feature2': 'Volgorde lijst aanpasbaar',
-                'info.feature3': 'Lijst volledig verwijderen',
-                'info.feature4': 'Extra info (keuze: Start info, Waypoint en Bonus)',
-                'info.feature5': 'Hints laten vertalen',
-                'info.feature6': 'Lijst printen',
-                'info.feature7': 'Kaarten maken (Google, OpenStreetMap of topografische weergave)',
+                'info.feature1': 'Import GPX-bestand uit Geocaching.com of GSAK',
+                'info.feature2': 'Lijst openen of opslaan als .clp-bestand',
+                'info.feature3': 'Instellingen: afstand (km/mi), taal, GC-code weergave',
+                'info.feature4': 'Lijst automatisch sorteren op nummers in cache-namen',
+                'info.feature5': 'Volgorde handmatig aanpassen (in lijst en op de kaart)',
+                'info.feature6': 'Extra info: Start info, Waypoint en Bonus',
+                'info.feature7': 'Waypoint-beheer voor Multi- en Virtual caches',
+                'info.feature8': 'Hints vertalen en bewerken',
+                'info.feature9': 'Lijst printen of als PDF opslaan',
+                'info.feature10': 'Kaarten (Google, OSM, Topo); nummers op de kaart wijzigen',
+                'info.feature11': 'Lijst volledig verwijderen',
                 'download.title': 'Download',
                 'download.facebook': 'Word lid van onze Facebook groep',
-                'download.updater-button': 'Update V1.4 naar V2.0',
+                'download.updater-button': 'Update V2.0 naar V3.0',
                 'download.updater-version': 'Updater',
                 'download.button': 'Download Cachelistprinter',
-                'download.version': 'Versie 1.4',
+                'download.version': 'Versie 3.0',
                 'download.compatible': 'Compatibel met Google Chrome en andere Chromium-gebaseerde browsers.<br>Vereist Windows 10/11 (64-bit).',
                 'download.alert': 'Download link wordt hier toegevoegd',
                 'donation.title': 'Ondersteun dit project',
@@ -884,21 +908,25 @@
                 'nav.home': 'Startseite',
                 'nav.download': 'Download',
                 'home.title': 'Cachelistprinter',
-                'home.description': 'Cachelistprinter ist eine eigenständige Electron-Anwendung zum Verwalten und Drucken von Geocache-Listen. Das Programm basiert auf und ersetzt das ursprüngliche Geoprinter-Programm. Mit Cachelistprinter können Sie GPX-Dateien importieren, Cache-Listen mit Start- und Bonus-Info erstellen, Hinweise übersetzen und sowohl Listen als auch Karten drucken. Das Programm funktioniert vollständig unabhängig und läuft unter Windows 10/11 (64-bit) ohne zusätzliche Software-Installationen.',
+                'home.description': 'Cachelistprinter ist eine eigenständige Electron-Anwendung zum Verwalten und Drucken von Geocache-Listen. Das Programm basiert auf und ersetzt das ursprüngliche Geoprinter-Programm. Mit Cachelistprinter können Sie eine GPX-Datei importieren, Listen öffnen oder als .clp speichern, Caches sortieren und verschieben, Zusatzinfo und Wegpunkte hinzufügen, Hinweise übersetzen und bearbeiten sowie Listen und Karten (Google, OSM, Topo) drucken. Das Programm funktioniert vollständig unabhängig und läuft unter Windows 10/11 (64-bit) ohne zusätzliche Software-Installationen.',
                 'info.title': 'Funktionen',
-                'info.feature1': 'GPX-Datei von Geocaching.com, Pocket Query oder GSAK importieren',
-                'info.feature2': 'Listenreihenfolge anpassbar',
-                'info.feature3': 'Liste vollständig löschen',
-                'info.feature4': 'Zusatzinfo (Wahl: Start-Info, Wegpunkt und Bonus)',
-                'info.feature5': 'Hinweise übersetzen lassen',
-                'info.feature6': 'Liste drucken',
-                'info.feature7': 'Karten erstellen (Google, OpenStreetMap oder topografische Ansicht)',
+                'info.feature1': 'GPX-Datei von Geocaching.com oder GSAK importieren',
+                'info.feature2': 'Liste öffnen oder als .clp-Datei speichern',
+                'info.feature3': 'Einstellungen: Entfernung (km/Meilen), Sprache, GC-Code-Anzeige',
+                'info.feature4': 'Liste automatisch nach Zahlen in Cache-Namen sortieren',
+                'info.feature5': 'Reihenfolge manuell anpassen (in Liste und auf der Karte)',
+                'info.feature6': 'Zusatzinfo: Start-Info, Wegpunkt und Bonus',
+                'info.feature7': 'Wegpunkt-Verwaltung für Multi- und Virtual Caches',
+                'info.feature8': 'Hinweise übersetzen und bearbeiten',
+                'info.feature9': 'Liste drucken oder als PDF speichern',
+                'info.feature10': 'Karten (Google, OSM, Topo); Nummern auf der Karte ändern',
+                'info.feature11': 'Liste vollständig löschen',
                 'download.title': 'Download',
                 'download.facebook': 'Werden Sie Mitglied unserer Facebook-Gruppe',
-                'download.updater-button': 'Update V1.4 auf V2.0',
+                'download.updater-button': 'Update V2.0 auf V3.0',
                 'download.updater-version': 'Updater',
                 'download.button': 'Cachelistprinter herunterladen',
-                'download.version': 'Version 1.4',
+                'download.version': 'Version 3.0',
                 'download.compatible': 'Kompatibel mit Google Chrome und anderen Chromium-basierten Browsern.<br>Erfordert Windows 10/11 (64-bit).',
                 'download.alert': 'Download-Link wird hier hinzugefügt',
                 'donation.title': 'Unterstützen Sie dieses Projekt',
@@ -917,21 +945,25 @@
                 'nav.home': 'Home',
                 'nav.download': 'Download',
                 'home.title': 'Cachelistprinter',
-                'home.description': 'Cachelistprinter is a standalone Electron application for managing and printing geocache lists. The program is based on and replaces the original Geoprinter program. With Cachelistprinter you can import GPX files, create cache lists with start and bonus info, translate hints, and print both lists and maps. The program works completely independently and runs on Windows 10/11 (64-bit) without additional software installations.',
+                'home.description': 'Cachelistprinter is a standalone Electron application for managing and printing geocache lists. The program is based on and replaces the original Geoprinter program. With Cachelistprinter you can import a GPX file, open or save lists as .clp, sort and move caches, add extra info and waypoints, translate and edit hints, and print both lists and maps (Google, OSM, Topo). The program works completely independently and runs on Windows 10/11 (64-bit) without additional software installations.',
                 'info.title': 'Features',
-                'info.feature1': 'Import GPX file from Geocaching.com, Pocket Query or GSAK',
-                'info.feature2': 'List order adjustable',
-                'info.feature3': 'Completely delete list',
-                'info.feature4': 'Extra info (choice: Start info, Waypoint and Bonus)',
-                'info.feature5': 'Translate hints',
-                'info.feature6': 'Print list',
-                'info.feature7': 'Create maps (Google, OpenStreetMap or topographic view)',
+                'info.feature1': 'Import GPX file from Geocaching.com or GSAK',
+                'info.feature2': 'Open or save list as .clp file',
+                'info.feature3': 'Settings: distance (km/mi), language, GC code display',
+                'info.feature4': 'Automatically sort list by numbers in cache names',
+                'info.feature5': 'Manually adjust order (in list and on map)',
+                'info.feature6': 'Extra info: Start info, Waypoint and Bonus',
+                'info.feature7': 'Waypoint management for Multi and Virtual caches',
+                'info.feature8': 'Translate and edit hints',
+                'info.feature9': 'Print list or save as PDF',
+                'info.feature10': 'Maps (Google, OSM, Topo); change numbers on the map',
+                'info.feature11': 'Completely delete list',
                 'download.title': 'Download',
                 'download.facebook': 'Join our Facebook group',
-                'download.updater-button': 'Update V1.4 to V2.0',
+                'download.updater-button': 'Update V2.0 to V3.0',
                 'download.updater-version': 'Updater',
                 'download.button': 'Download Cachelistprinter',
-                'download.version': 'Version 1.4',
+                'download.version': 'Version 3.0',
                 'download.compatible': 'Compatible with Google Chrome and other Chromium-based browsers.<br>Requires Windows 10/11 (64-bit).',
                 'download.alert': 'Download link will be added here',
                 'donation.title': 'Support this project',
@@ -950,21 +982,25 @@
                 'nav.home': 'Accueil',
                 'nav.download': 'Télécharger',
                 'home.title': 'Cachelistprinter',
-                'home.description': 'Cachelistprinter est une application Electron autonome pour gérer et imprimer des listes de géocaches. Le programme est basé sur et remplace le programme Geoprinter original. Avec Cachelistprinter, vous pouvez importer des fichiers GPX, créer des listes de caches avec des informations de départ et bonus, traduire les indices et imprimer à la fois des listes et des cartes. Le programme fonctionne de manière complètement indépendante et fonctionne sous Windows 10/11 (64-bit) sans installations logicielles supplémentaires.',
+                'home.description': 'Cachelistprinter est une application Electron autonome pour gérer et imprimer des listes de géocaches. Le programme est basé sur et remplace le programme Geoprinter original. Avec Cachelistprinter, vous pouvez importer un fichier GPX, ouvrir ou enregistrer des listes en .clp, trier et déplacer les caches, ajouter des infos et waypoints, traduire et modifier les indices, et imprimer listes et cartes (Google, OSM, Topo). Le programme fonctionne de manière totalement indépendante sous Windows 10/11 (64-bit) sans installations logicielles supplémentaires.',
                 'info.title': 'Fonctionnalités',
-                'info.feature1': 'Importer un fichier GPX depuis Geocaching.com, Pocket Query ou GSAK',
-                'info.feature2': 'Ordre de la liste ajustable',
-                'info.feature3': 'Supprimer complètement la liste',
-                'info.feature4': 'Info extra (choix : info départ, waypoint et bonus)',
-                'info.feature5': 'Faire traduire les indices',
-                'info.feature6': 'Imprimer la liste',
-                'info.feature7': 'Créer des cartes (Google, OpenStreetMap ou vue topographique)',
+                'info.feature1': 'Importer un fichier GPX depuis Geocaching.com ou GSAK',
+                'info.feature2': 'Ouvrir ou enregistrer la liste en fichier .clp',
+                'info.feature3': 'Paramètres : distance (km/mi), langue, affichage du code GC',
+                'info.feature4': 'Trier automatiquement la liste par les numéros dans les noms des caches',
+                'info.feature5': 'Ajuster l\'ordre manuellement (dans la liste et sur la carte)',
+                'info.feature6': 'Info extra : info départ, waypoint et bonus',
+                'info.feature7': 'Gestion des waypoints pour les caches Multi et Virtual',
+                'info.feature8': 'Traduire et modifier les indices',
+                'info.feature9': 'Imprimer la liste ou enregistrer en PDF',
+                'info.feature10': 'Cartes (Google, OSM, Topo) ; modifier les numéros sur la carte',
+                'info.feature11': 'Supprimer complètement la liste',
                 'download.title': 'Télécharger',
                 'download.facebook': 'Rejoignez notre groupe Facebook',
-                'download.updater-button': 'Mise à jour V1.4 vers V2.0',
+                'download.updater-button': 'Mise à jour V2.0 vers V3.0',
                 'download.updater-version': 'Updater',
                 'download.button': 'Télécharger Cachelistprinter',
-                'download.version': 'Version 1.4',
+                'download.version': 'Version 3.0',
                 'download.compatible': 'Compatible avec Google Chrome et autres navigateurs basés sur Chromium.<br>Requiert Windows 10/11 (64-bit).',
                 'download.alert': 'Le lien de téléchargement sera ajouté ici',
                 'donation.title': 'Soutenez ce projet',
