@@ -474,26 +474,49 @@
             margin-top: 0;
         }
 
-        /* Download Instructions Image */
+        /* Download: 3 knoppen + post-it samen over volle breedte van het blad uitgelijnd */
         .download-instructions-wrapper {
-            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
             margin: 20px 0;
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
         }
 
-        .download-buttons-column {
-            transform: translateX(-50px);
+        .download-buttons-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* Knoppen en post-it op dezelfde verticale middenlijn */
+        .download-buttons-row .download-updater-button,
+        .download-buttons-row .download-button {
+            margin-bottom: 0;
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            align-self: center;
+            vertical-align: middle;
         }
 
         .download-instructions-image {
-            position: absolute;
-            right: 100px;
-            top: -40px;
-            width: 280px;
+            width: 260px;
             height: auto;
-            max-width: 280px;
+            max-width: 26%;
+            min-width: 180px;
             transform: rotate(8deg);
-            flex-shrink: 0;
-            z-index: 1;
+            flex-shrink: 1;
+            align-self: center;
+            margin-left: 0;
             background: transparent;
             border: none;
             padding: 0;
@@ -693,6 +716,25 @@
                 font-size: 14px;
             }
 
+            .download-buttons-row {
+                flex-direction: column;
+                align-items: stretch;
+                justify-content: flex-start;
+                width: 100%;
+            }
+
+            .download-buttons-row .download-updater-button,
+            .download-buttons-row .download-button {
+                align-self: center;
+            }
+
+            .download-instructions-image {
+                margin-left: 0;
+                max-width: 220px;
+                min-width: 0;
+                align-self: center;
+            }
+
             .features-container {
                 flex-direction: column;
                 gap: 20px;
@@ -770,11 +812,13 @@
                             </ul>
                         </div>
                         <div class="features-image">
-                            <video src="Vertoning.mp4"
-                                   autoplay
+                            <video autoplay
                                    muted
                                    loop
-                                   playsinline>
+                                   playsinline
+                                   preload="auto">
+                                <source src="Diashow.mp4" type="video/mp4">
+                                <source src="slideshow.mp4" type="video/mp4">
                                 Je browser ondersteunt geen video.
                             </video>
                         </div>
@@ -784,7 +828,7 @@
                 <section id="download" class="section">
                     <h3 data-i18n="download.title">Download</h3>
                     <div class="download-instructions-wrapper">
-                        <div class="download-buttons-column">
+                        <div class="download-buttons-row">
                             <a href="#" class="download-updater-button" id="download-updater-button">
                                 <span class="button-text" data-i18n="download.updater-button">Update V2.0 naar V3.0</span>
                                 <span class="button-subtext" data-i18n="download.updater-version">Updater</span>
@@ -793,12 +837,16 @@
                                 <span class="button-text" data-i18n="download.button">Download Cachelistprinter</span>
                                 <span class="button-subtext" data-i18n="download.version">Versie 3.0</span>
                             </a>
-                            <p class="download-info" data-i18n="download.compatible">
-                                Compatibel met Google Chrome en andere Chromium-gebaseerde browsers.<br>
-                                Vereist Windows 10/11 (64-bit).
-                            </p>
+                            <a href="#" class="download-updater-button" id="download-v31-updater-button">
+                                <span class="button-text" data-i18n="download.v31-updater-button">Update van V3.0 naar V3.1</span>
+                                <span class="button-subtext" data-i18n="download.v31-updater-version">Updater</span>
+                            </a>
+                            <img id="download-instructions-image" src="Download instructie NE.png" alt="Download instructies" class="download-instructions-image">
                         </div>
-                        <img id="download-instructions-image" src="Download instructie NE.png" alt="Download instructies" class="download-instructions-image">
+                        <p class="download-info" data-i18n="download.compatible">
+                            Compatibel met Google Chrome en andere Chromium-gebaseerde browsers.<br>
+                            Vereist Windows 10/11 (64-bit).
+                        </p>
                     </div>
                 </section>
 
@@ -858,8 +906,9 @@
         // De QR code wordt automatisch bijgewerkt wanneer je de donatielink aanpast.
         // ============================================
         const siteConfig = {
-            updaterUrl: 'https://1drv.ms/f/c/d14f47efc6088a2b/IgAjVej8Wr33RogRiLlAWXf5AXQLTkR8YWVc89CEOSs6z4s?e=o665gp',  // Updater V2.0 → V3.0
-            downloadUrl: 'https://1drv.ms/f/c/d14f47efc6088a2b/IgBCo3y_FknhSYLtDk4AyEWqAed8xob9bHd-Q1Xe23bObIU?e=0ptoa1',  // Download V3.0
+            updaterUrl: 'https://1drv.ms/f/c/d14f47efc6088a2b/IgCxJ3omXvtOQoZWQ7wpCo-CARvbbZYaNkaGuY_cfeHGXyw?e=Vc9juo',  // Updater V2.0 → V3.0
+            downloadUrl: 'https://1drv.ms/f/c/d14f47efc6088a2b/IgDt2pA-3uesTaY6nG5PRY_-ASD0xP8EbntWwzCfIPx7wJ4?e=jY3uDQ',  // Download V3.0
+            v31UpdaterUrl: 'https://1drv.ms/f/c/d14f47efc6088a2b/IgAZtCQrxElORaqycg1DvQmqAZctWYjnCma7tfcTafd9nb0?e=5J3a85',  // Updater V3.0 → V3.1
             donationUrl: 'https://ko-fi.com/cachelistprinter'  // Pas deze aan voor een nieuwe donatielink
         };
         // ============================================
@@ -888,6 +937,8 @@
                 'download.facebook': 'Word lid van onze Facebook groep',
                 'download.updater-button': 'Update V2.0 naar V3.0',
                 'download.updater-version': 'Updater',
+                'download.v31-updater-button': 'Update van V3.0 naar V3.1',
+                'download.v31-updater-version': 'Updater',
                 'download.button': 'Download Cachelistprinter',
                 'download.version': 'Versie 3.0',
                 'download.compatible': 'Compatibel met Google Chrome en andere Chromium-gebaseerde browsers.<br>Vereist Windows 10/11 (64-bit).',
@@ -925,6 +976,8 @@
                 'download.facebook': 'Werden Sie Mitglied unserer Facebook-Gruppe',
                 'download.updater-button': 'Update V2.0 auf V3.0',
                 'download.updater-version': 'Updater',
+                'download.v31-updater-button': 'Update von V3.0 auf V3.1',
+                'download.v31-updater-version': 'Updater',
                 'download.button': 'Cachelistprinter herunterladen',
                 'download.version': 'Version 3.0',
                 'download.compatible': 'Kompatibel mit Google Chrome und anderen Chromium-basierten Browsern.<br>Erfordert Windows 10/11 (64-bit).',
@@ -962,6 +1015,8 @@
                 'download.facebook': 'Join our Facebook group',
                 'download.updater-button': 'Update V2.0 to V3.0',
                 'download.updater-version': 'Updater',
+                'download.v31-updater-button': 'Update from V3.0 to V3.1',
+                'download.v31-updater-version': 'Updater',
                 'download.button': 'Download Cachelistprinter',
                 'download.version': 'Version 3.0',
                 'download.compatible': 'Compatible with Google Chrome and other Chromium-based browsers.<br>Requires Windows 10/11 (64-bit).',
@@ -999,6 +1054,8 @@
                 'download.facebook': 'Rejoignez notre groupe Facebook',
                 'download.updater-button': 'Mise à jour V2.0 vers V3.0',
                 'download.updater-version': 'Updater',
+                'download.v31-updater-button': 'Mise à jour de V3.0 vers V3.1',
+                'download.v31-updater-version': 'Updater',
                 'download.button': 'Télécharger Cachelistprinter',
                 'download.version': 'Version 3.0',
                 'download.compatible': 'Compatible avec Google Chrome et autres navigateurs basés sur Chromium.<br>Requiert Windows 10/11 (64-bit).',
@@ -1089,6 +1146,22 @@
                 }
             }
             
+            // Set V3.0 → V3.1 updater URL
+            const downloadV31UpdaterButton = document.getElementById('download-v31-updater-button');
+            if (downloadV31UpdaterButton) {
+                if (siteConfig.v31UpdaterUrl && siteConfig.v31UpdaterUrl !== '') {
+                    downloadV31UpdaterButton.href = siteConfig.v31UpdaterUrl;
+                    downloadV31UpdaterButton.target = '_blank';
+                    downloadV31UpdaterButton.rel = 'noopener noreferrer';
+                    downloadV31UpdaterButton.onclick = null;
+                } else {
+                    // Knop zichtbaar houden voor preview; klik opent geen link tot v31UpdaterUrl is ingevuld
+                    downloadV31UpdaterButton.href = '#';
+                    downloadV31UpdaterButton.removeAttribute('target');
+                    downloadV31UpdaterButton.onclick = function(e) { e.preventDefault(); };
+                }
+            }
+            
             // Set download URL
             const downloadButton = document.getElementById('download-button');
             if (downloadButton) {
@@ -1132,7 +1205,7 @@
             // Smooth scrolling for anchor links (na download button setup, zodat href al is aangepast)
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 // Sla de download- en updater-knoppen over - deze hebben externe links
-                if (anchor.id === 'download-button' || anchor.id === 'download-updater-button') {
+                if (anchor.id === 'download-button' || anchor.id === 'download-updater-button' || anchor.id === 'download-v31-updater-button') {
                     return;
                 }
                 anchor.addEventListener('click', function (e) {
